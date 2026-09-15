@@ -17,11 +17,16 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DEFAULT_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.0-flash")
-DEFAULT_JUDGE_MODEL = os.environ.get("GEMINI_JUDGE_MODEL", "gemini-2.0-flash")
+DEFAULT_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.6-flash")
+DEFAULT_JUDGE_MODEL = os.environ.get("GEMINI_JUDGE_MODEL", "gemini-3.6-flash")
 
 # Requests per minute to allow across all threads. Override with GEMINI_RPM.
 RPM = int(os.environ.get("GEMINI_RPM", "120"))
+
+# Gemini 3.x "thinking" is on by default and can consume the whole output budget
+# (and ~13s of latency) before any answer text appears. A small fixed budget keeps
+# replies fast and well-formed; set GEMINI_THINKING_BUDGET=-1 for dynamic thinking.
+THINKING_BUDGET = int(os.environ.get("GEMINI_THINKING_BUDGET", "128"))
 
 
 class LLMError(RuntimeError):
@@ -123,6 +128,7 @@ def generate(
         temperature=temperature,
         max_output_tokens=max_output_tokens,
         system_instruction=system_instruction,
+        thinking_config=types.ThinkingConfig(thinking_budget=THINKING_BUDGET),
         # Injection payloads routinely trip the default safety filters, which would
         # silently turn an *unsuccessful* attack into an API error. Disable them so
         # that what we measure is the agent's behaviour, not Google's moderation.
