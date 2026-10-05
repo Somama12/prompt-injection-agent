@@ -77,8 +77,12 @@ class CompositeDefense(Defense):
         return result
 
     def check_action(self, ctx: ActionContext) -> Verdict:
+        self._last_guard_calls = 0
         for p in self.parts:
-            verdict = p.check_action(ctx)
+            try:
+                verdict = p.check_action(ctx)
+            finally:
+                self._last_guard_calls += getattr(p, "_last_guard_calls", 0)
             if not verdict.allowed:
                 return Verdict(False, f"[{p.name}] {verdict.reason}")
         return ALLOW

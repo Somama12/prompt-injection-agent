@@ -145,10 +145,14 @@ def parse_response(text: str) -> tuple[str, Any]:
             payload = json.loads(blob)
         except json.JSONDecodeError:
             return "unparsed", text
+        if not isinstance(payload, dict):
+            return "unparsed", text
         tool = payload.get("tool") or payload.get("name") or ""
         args = payload.get("args") or payload.get("arguments") or {}
-        if not isinstance(args, dict):
-            args = {}
+        if not isinstance(tool, str) or not tool or not isinstance(args, dict):
+            return "unparsed", text
+        if any(not isinstance(v, str) for v in args.values()):
+            return "unparsed", text
         return "action", {"tool": tool, "args": args}
 
     m = FINAL_RE.search(cleaned)
@@ -218,8 +222,10 @@ def run_agent(
                 untrusted_content=page_content,
                 prior_calls=[c.name for c in registry.calls],
             )
-            verdict = defense.check_action(ctx)
-            run.guard_calls += getattr(defense, "_last_guard_calls", 0)
+            try:
+                verdict = defense.check_action(ctx)
+            finally:
+                run.guard_calls += getattr(defense, "_last_guard_calls", 0)
 
             if not verdict.allowed:
                 call = registry.record_blocked(tool_name, args, defense.name, verdict.reason)

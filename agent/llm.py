@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import os
 import random
+import re
 import threading
 import time
 from dataclasses import dataclass, field
@@ -18,15 +19,15 @@ from dotenv import load_dotenv
 load_dotenv()
 
 DEFAULT_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.6-flash")
-DEFAULT_JUDGE_MODEL = os.environ.get("GEMINI_JUDGE_MODEL", "gemini-3.6-flash")
+DEFAULT_JUDGE_MODEL = os.environ.get("GEMINI_JUDGE_MODEL", DEFAULT_MODEL)
 
 # Requests per minute to allow across all threads. Override with GEMINI_RPM.
-RPM = int(os.environ.get("GEMINI_RPM", "120"))
+RPM = int(os.environ.get("GEMINI_RPM", "5"))
 
 # Gemini 3.x "thinking" is on by default and can consume the whole output budget
 # (and ~13s of latency) before any answer text appears. A small fixed budget keeps
 # replies fast and well-formed; set GEMINI_THINKING_BUDGET=-1 for dynamic thinking.
-THINKING_BUDGET = int(os.environ.get("GEMINI_THINKING_BUDGET", "128"))
+THINKING_BUDGET = int(os.environ.get("GEMINI_THINKING_BUDGET", "0"))
 
 
 class LLMError(RuntimeError):
@@ -95,7 +96,7 @@ def get_client():
                     )
                 from google import genai
 
-                _client = genai.Client(api_key=api_key)
+                _client = genai.Client(api_key=api_key, http_options={"timeout": 60000})
     return _client
 
 
@@ -110,6 +111,17 @@ def _is_retryable(exc: Exception) -> bool:
     )
 
 
+def retry_delay(exc: Exception, attempt: int) -> float:
+    """Honor the provider retry hint, with a bounded wait and fallback backoff."""
+    message = str(exc)
+    match = re.search(r"retry in ([0-9.]+)s", message, re.IGNORECASE)
+    if not match:
+        match = re.search(r"retryDelay['\"]?\s*:\s*['\"]([0-9.]+)s", message)
+    if match:
+        return min(60.0, float(match.group(1)) + 1.0)
+    return min(2**attempt + random.uniform(0, 1.0), 60.0)
+
+
 def generate(
     prompt: str,
     *,
@@ -117,18 +129,20 @@ def generate(
     model: str | None = None,
     temperature: float = 0.0,
     max_output_tokens: int = 1024,
-    max_attempts: int = 6,
+    max_attempts: int = 3,
 ) -> str:
     """Single-turn text generation. Returns the model's text, or raises LLMError."""
     from google.genai import types
 
     client = get_client()
     model = model or DEFAULT_MODEL
+    # Use budget control only on the model family that supports it.
+    thinking = types.ThinkingConfig(thinking_budget=THINKING_BUDGET) if model.startswith("gemini-2.5-") else None
     config = types.GenerateContentConfig(
         temperature=temperature,
         max_output_tokens=max_output_tokens,
         system_instruction=system_instruction,
-        thinking_config=types.ThinkingConfig(thinking_budget=THINKING_BUDGET),
+        thinking_config=thinking,
         # Injection payloads routinely trip the default safety filters, which would
         # silently turn an *unsuccessful* attack into an API error. Disable them so
         # that what we measure is the agent's behaviour, not Google's moderation.
@@ -162,8 +176,10 @@ def generate(
                 break
             with STATS.lock:
                 STATS.retries += 1
-            time.sleep(min(2**attempt + random.uniform(0, 1.0), 30.0))
+            delay = retry_delay(exc, attempt)
+            time.sleep(delay)
 
     with STATS.lock:
         STATS.failures += 1
-    raise LLMError(f"Gemini call failed after {max_attempts} attempts: {last_exc}")
+    detail = str(last_exc).replace(os.environ.get("GEMINI_API_KEY") or "__NO_KEY__", "[REDACTED]")
+    raise LLMError(f"Gemini call failed after {attempt + 1} attempts: {detail}")

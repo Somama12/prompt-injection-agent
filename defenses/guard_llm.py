@@ -35,8 +35,8 @@ class GuardLLMDefense(Defense):
     name = "guard_llm"
     label = "Guard LLM"
     description = (
-        "A secondary Gemini call vets every proposed tool action against the task "
-        "and security policy, and vetoes anything inconsistent (1 extra call/action)."
+        "A secondary Gemini call vets each proposed email against the task "
+        "and security policy (one extra call per proposed email)."
     )
 
     def __init__(self) -> None:
@@ -62,14 +62,17 @@ class GuardLLMDefense(Defense):
         try:
             self._last_guard_calls = 1
             reply = llm.generate(
-                prompt, system_instruction=GUARD_SYSTEM, temperature=0.0, max_output_tokens=64
+                prompt, system_instruction=GUARD_SYSTEM, model=llm.DEFAULT_JUDGE_MODEL,
+                temperature=0.0, max_output_tokens=512
             )
-        except llm.LLMError:
-            # Fail closed for the irreversible action if the guard is unavailable.
-            return Verdict(False, "guard unavailable; blocking irreversible action")
+        except llm.LLMError as exc:
+            # Abort the episode before dispatch, and classify it as an error.
+            raise llm.LLMError(f"guard unavailable: {exc}") from exc
 
         verdict_line = reply.strip().splitlines()[0] if reply.strip() else ""
         if re.match(r"^\s*BLOCK", verdict_line, re.IGNORECASE):
             reason = verdict_line.split(":", 1)[1].strip() if ":" in verdict_line else "guard vetoed action"
             return Verdict(False, reason or "guard vetoed action")
-        return Verdict(True)
+        if reply.strip().upper() == "ALLOW":
+            return Verdict(True)
+        raise llm.LLMError("invalid guard verdict; email was not executed")
