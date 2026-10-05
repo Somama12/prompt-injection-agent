@@ -1,149 +1,80 @@
-"""Turn results/raw_results.csv into a heatmap PNG and markdown summary tables.
-
-Run after evaluation.harness. Produces:
-  results/heatmap.png            attack-category x defense, attack success rate
-  results/summary.md             per-defense + per-category tables, judge agreement
-"""
+"""Summarize checkpoints without counting infrastructure errors as safe attacks."""
 from __future__ import annotations
-
+import argparse
 import json
-import os
-
+from pathlib import Path
+import statistics
 import matplotlib
-matplotlib.use("Agg")
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
-
 from benchmark.attacks import CATEGORIES
-from defenses.registry import DEFENSE_ORDER
-
-RESULTS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "results")
-CAT_ORDER = ["direct_override", "roleplay_jailbreak", "data_exfiltration", "fake_system"]
+from evaluation.harness import RESULTS_DIR, load_records, atomic_json
 
 
-def _load():
-    df = pd.read_csv(os.path.join(RESULTS_DIR, "raw_results.csv"))
-    df["programmatic_success"] = df["programmatic_success"].astype(bool)
-    return df
-
-
-def _defense_labels(df):
-    return {r["defense"]: r["defense_label"] for _, r in df.iterrows()}
-
-
-def make_heatmap(df):
-    labels = _defense_labels(df)
-    defenses = [d for d in DEFENSE_ORDER if d in df["defense"].unique()]
-    cats = [c for c in CAT_ORDER if c in df["category"].unique()]
-
-    # rows = category, cols = defense, value = attack success rate (%)
-    mat = np.zeros((len(cats), len(defenses)))
-    for i, cat in enumerate(cats):
-        for j, dfn in enumerate(defenses):
-            sub = df[(df["category"] == cat) & (df["defense"] == dfn)]
-            mat[i, j] = 100.0 * sub["programmatic_success"].mean() if len(sub) else np.nan
-
-    fig, ax = plt.subplots(figsize=(1.6 * len(defenses) + 2, 1.1 * len(cats) + 2))
-    im = ax.imshow(mat, cmap="RdYlGn_r", vmin=0, vmax=100, aspect="auto")
-
-    ax.set_xticks(range(len(defenses)))
-    ax.set_xticklabels([labels.get(d, d) for d in defenses], rotation=30, ha="right")
-    ax.set_yticks(range(len(cats)))
-    ax.set_yticklabels([CATEGORIES.get(c, c) for c in cats])
-
-    for i in range(len(cats)):
-        for j in range(len(defenses)):
-            val = mat[i, j]
-            if not np.isnan(val):
-                ax.text(j, i, f"{val:.0f}%", ha="center", va="center",
-                        color="white" if (val > 60 or val < 15) else "black",
-                        fontsize=11, fontweight="bold")
-
-    cbar = fig.colorbar(im, ax=ax, shrink=0.8)
-    cbar.set_label("Attack success rate (%)")
-    ax.set_title("Prompt-injection attack success rate\nby attack category x defense",
-                 fontweight="bold")
+def summarize(output):
+    output = Path(output)
+    manifest = json.loads((output / 'manifest.json').read_text())
+    cells = [r['cell'] for r in load_records(output)]
+    config = manifest['config']
+    table = []
+    for defense in config['defenses']:
+        attacked = [c for c in cells if c['defense'] == defense and c['category'] != 'clean']
+        valid = [c for c in attacked if c['status'] == 'ok']
+        clean = [c for c in cells if c['defense'] == defense and c['category'] == 'clean' and c['status'] == 'ok']
+        table.append({'defense': defense, 'valid_attacks': len(valid),
+                      'attack_errors': len(attacked) - len(valid),
+                      'attack_successes': sum(c['programmatic_success'] is True for c in valid),
+                      'attack_success_rate': sum(c['programmatic_success'] is True for c in valid) / len(valid) if valid else None,
+                      'task_success_under_attack': sum(c['legitimate_success'] for c in valid) / len(valid) if valid else None,
+                      'clean_valid': len(clean), 'clean_successes': sum(c['legitimate_success'] for c in clean),
+                      'mean_latency_s': statistics.mean(c['latency_s'] for c in valid) if valid else None,
+                      'mean_guard_calls': statistics.mean(c['guard_calls'] for c in valid) if valid else None})
+    atomic_json(output / 'analysis.json', table)
+    lines = ['# Benchmark results', '', f"Model: {config['model']}; repeats: {config['repeats']}; saved episodes: {len(cells)}/{manifest['planned_episodes']}.",
+             '', 'Errors are excluded from attack-success denominators and reported separately. Missing results are not zero success. Single-trial results are preliminary; repeated episodes are not independent attack designs.', '',
+             '| Defense | Valid attacks | Errors | Attack success | Task success under attack | Clean success | Mean latency | Guard calls |',
+             '|---|---:|---:|---:|---:|---:|---:|---:|']
+    def pct(value): return 'N/A' if value is None else f'{value:.1%}'
+    def number(value): return 'N/A' if value is None else f'{value:.2f}'
+    for row in table:
+        lines.append(f"| {row['defense']} | {row['valid_attacks']} | {row['attack_errors']} | {pct(row['attack_success_rate'])} | {pct(row['task_success_under_attack'])} | {row['clean_successes']}/{row['clean_valid']} | {number(row['mean_latency_s'])} s | {number(row['mean_guard_calls'])} |")
+    judged = [c for c in cells if c['status'] == 'ok' and type(c['judge_success']) is bool]
+    lines += ['', f"Judge verdicts available: {len(judged)}. Agreement with the deterministic scorer: " + (pct(sum(c['judge_success'] == c['programmatic_success'] for c in judged) / len(judged)) if judged else 'N/A') + '.',
+              'Agreement between automated scorers is not human validation. See evaluation.validation for blinded review.', '',
+              'Latency includes rate-limit waits and provider retries in the agent/guard loop, but excludes the later judge call. Guard calls are a cost proxy, not a dollar-cost measurement.',
+              'Task success uses a keyword/length heuristic and needs manual validation. Credential exposure means a secret in an executed tool argument in this mock environment; it does not establish real-world network exfiltration.']
+    (output / 'summary.md').write_text('\n'.join(lines) + '\n')
+    matrix = np.full((len(CATEGORIES), len(config['defenses'])), np.nan)
+    counts = {}
+    for i, category in enumerate(CATEGORIES):
+        for j, defense in enumerate(config['defenses']):
+            subset = [c for c in cells if c['status'] == 'ok' and c['category'] == category and c['defense'] == defense]
+            counts[i,j] = len(subset)
+            if subset: matrix[i,j] = sum(c['programmatic_success'] is True for c in subset) / len(subset) * 100
+    fig, ax = plt.subplots(figsize=(12, 5.8))
+    cmap = plt.get_cmap('YlOrRd').with_extremes(bad='#eeeeee')
+    im = ax.imshow(np.ma.masked_invalid(matrix), cmap=cmap, vmin=0, vmax=100, aspect='auto')
+    for i in range(matrix.shape[0]):
+        for j in range(matrix.shape[1]):
+            val = matrix[i,j]
+            text = 'No valid runs' if np.isnan(val) else f'{val:.0f}%\nn={counts[i,j]}'
+            ax.text(j, i, text, ha='center', va='center', color='white' if val > 60 else 'black', fontsize=9)
+    ax.set_xticks(range(len(config['defenses'])), [d.replace('_', ' ') for d in config['defenses']], rotation=25, ha='right')
+    ax.set_yticks(range(len(CATEGORIES)), list(CATEGORIES.values()))
+    ax.set_title('Observed attack success by category and defense\nErrors excluded; gray cells have no valid observations')
+    fig.colorbar(im, ax=ax, label='Attack success (%)')
     fig.tight_layout()
-    out = os.path.join(RESULTS_DIR, "heatmap.png")
-    fig.savefig(out, dpi=150, bbox_inches="tight")
+    fig.savefig(output / 'heatmap.png', dpi=180)
     plt.close(fig)
-    print("wrote", out)
-    return mat, cats, defenses, labels
-
-
-def make_summary_md(df, mat, cats, defenses, labels):
-    task = {}
-    tpath = os.path.join(RESULTS_DIR, "task_success.json")
-    if os.path.exists(tpath):
-        task = json.load(open(tpath))
-    summ = {}
-    spath = os.path.join(RESULTS_DIR, "run_summary.json")
-    if os.path.exists(spath):
-        summ = json.load(open(spath))
-
-    lines = ["# Results summary\n"]
-    if summ:
-        api = summ.get("api_stats", {})
-        lines.append(
-            f"Run: {summ.get('n_attacks')} attacks x {summ.get('n_defenses')} defenses = "
-            f"**{summ.get('n_cells')} attack-defense cells**, "
-            f"{api.get('calls','?')} real Gemini calls, "
-            f"judge {'on' if summ.get('judge_used') else 'off'}, "
-            f"wall-clock {summ.get('wall_clock_s','?')}s.\n"
-        )
-
-    # ---- per-defense table ----
-    lines.append("## Attack success rate per defense\n")
-    lines.append("| Defense | Attack success rate | Attacks blocked | Legit. task success | Mean latency/run (s) | Extra LLM calls/action |")
-    lines.append("|---|---|---|---|---|---|")
-    for dfn in defenses:
-        sub = df[df["defense"] == dfn]
-        asr = 100.0 * sub["programmatic_success"].mean()
-        n_succ = int(sub["programmatic_success"].sum())
-        n_tot = len(sub)
-        blocked = int((sub["blocked_count"] > 0).sum())
-        lat = sub["latency_s"].mean()
-        t = task.get(dfn, {})
-        ts = "yes" if t.get("task_success") else ("no" if t else "-")
-        extra = next((d["extra_llm_calls_per_action"] for d in summ.get("defenses", [])
-                      if d["name"] == dfn), "-")
-        lines.append(f"| {labels.get(dfn,dfn)} | **{asr:.0f}%** ({n_succ}/{n_tot}) | "
-                     f"{blocked}/{n_tot} | {ts} | {lat:.1f} | {extra} |")
-    lines.append("")
-
-    # ---- category x defense matrix ----
-    lines.append("## Attack success rate: category x defense (%)\n")
-    header = "| Attack category | " + " | ".join(labels.get(d, d) for d in defenses) + " |"
-    lines.append(header)
-    lines.append("|" + "---|" * (len(defenses) + 1))
-    for i, cat in enumerate(cats):
-        row = [CATEGORIES.get(cat, cat)] + [f"{mat[i,j]:.0f}%" for j in range(len(defenses))]
-        lines.append("| " + " | ".join(row) + " |")
-    lines.append("")
-
-    # ---- judge agreement ----
-    if "judge_success" in df.columns:
-        judged = df[df["judge_success"].notna() & (df["judge_success"].astype(str) != "")]
-        if len(judged):
-            judged = judged.copy()
-            judged["j"] = judged["judge_success"].astype(str).str.lower().isin(["true", "1"])
-            agree = (judged["j"] == judged["programmatic_success"]).mean() * 100
-            lines.append("## LLM-judge validation\n")
-            lines.append(f"Programmatic scorer vs. Gemini-as-judge agreed on "
-                         f"**{agree:.0f}%** of {len(judged)} judged cells.\n")
-
-    out = os.path.join(RESULTS_DIR, "summary.md")
-    with open(out, "w") as f:
-        f.write("\n".join(lines))
-    print("wrote", out)
+    return table
 
 
 def main():
-    df = _load()
-    mat, cats, defenses, labels = make_heatmap(df)
-    make_summary_md(df, mat, cats, defenses, labels)
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('--output-dir', type=Path, default=RESULTS_DIR)
+    args = ap.parse_args()
+    summarize(args.output_dir)
+    print(f'Wrote summary.md, analysis.json and heatmap.png in {args.output_dir}')
 
-
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__': main()
