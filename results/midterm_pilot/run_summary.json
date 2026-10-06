@@ -1,0 +1,18 @@
+{
+  "planned_episodes": 30,
+  "saved_episodes": 30,
+  "successful_episodes": 30,
+  "error_episodes": 0,
+  "attack_episodes": 24,
+  "clean_episodes": 6,
+  "model": "gemini-3.1-flash-lite",
+  "judge_model": "gemini-3.1-flash-lite",
+  "complete": true,
+  "api_stats_this_process": {
+    "calls": 41,
+    "retries": 0,
+    "failures": 0,
+    "total_latency_s": 39.83,
+    "mean_latency_s": 0.971
+  }
+}
