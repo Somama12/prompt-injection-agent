@@ -53,3 +53,17 @@ Do not combine the Gemini pilot and Groq observations as one model's results.
 
 Only after valid controls and a representative attack pilot will we choose the
 full-study schedule and estimate completion time from measured performance.
+
+## Live compatibility findings
+
+The account owner confirmed Free-plan status. A minimal request authenticated
+successfully. The first two clean-control configurations were rejected with HTTP
+400 because GPT-OSS emitted native tool intent despite the text ACTION prompt.
+These failed attempts remain in `results/groq_pilot` and `results/groq_pilot_v2`.
+
+The revised adapter declares only the three local mock tools and converts one native
+function call into the existing ACTION format. It never executes a tool remotely;
+the existing parser, defenses and local dispatcher still decide execution. Guard
+and judge requests receive no tool definitions. This is a provider-specific action
+transport difference and must be disclosed in comparisons with Gemini. The revised
+pilot directory is `results/groq_pilot_v3`; the script now targets that directory.
