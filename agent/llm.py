@@ -18,16 +18,26 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DEFAULT_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.6-flash")
-DEFAULT_JUDGE_MODEL = os.environ.get("GEMINI_JUDGE_MODEL", DEFAULT_MODEL)
+PROVIDER = os.environ.get("LLM_PROVIDER", "gemini")
+if PROVIDER not in {"gemini", "groq"}:
+    raise ValueError("LLM_PROVIDER must be gemini or groq")
+DEFAULT_MODEL = os.environ.get("GROQ_MODEL", "openai/gpt-oss-20b") if PROVIDER == "groq" else os.environ.get("GEMINI_MODEL", "gemini-3.6-flash")
+DEFAULT_JUDGE_MODEL = os.environ.get("GROQ_JUDGE_MODEL" if PROVIDER == "groq" else "GEMINI_JUDGE_MODEL", DEFAULT_MODEL)
 
 # Requests per minute to allow across all threads. Override with GEMINI_RPM.
-RPM = int(os.environ.get("GEMINI_RPM", "5"))
+RPM = int(os.environ.get("GROQ_RPM" if PROVIDER == "groq" else "GEMINI_RPM", "5"))
 
 # Gemini 3.x "thinking" is on by default and can consume the whole output budget
 # (and ~13s of latency) before any answer text appears. A small fixed budget keeps
 # replies fast and well-formed; set GEMINI_THINKING_BUDGET=-1 for dynamic thinking.
 THINKING_BUDGET = int(os.environ.get("GEMINI_THINKING_BUDGET", "0"))
+
+
+def redact_secrets(text):
+    for name in ("GEMINI_API_KEY", "GROQ_API_KEY"):
+        key = os.environ.get(name)
+        if key: text = text.replace(key, "[REDACTED]")
+    return text
 
 
 class LLMError(RuntimeError):
@@ -132,6 +142,19 @@ def generate(
     max_attempts: int = 3,
 ) -> str:
     """Single-turn text generation. Returns the model's text, or raises LLMError."""
+    if PROVIDER == "groq":
+        from agent.groq_provider import complete
+        _LIMITER.acquire()
+        started = time.monotonic()
+        try:
+            text = complete(prompt, system_instruction=system_instruction, model=model or DEFAULT_MODEL,
+                            temperature=temperature, max_output_tokens=max_output_tokens)
+            STATS.record(time.monotonic() - started)
+            return text
+        except Exception as exc:
+            with STATS.lock:
+                STATS.failures += 1
+            raise LLMError(redact_secrets(str(exc))) from None
     from google.genai import types
 
     client = get_client()

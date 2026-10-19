@@ -101,3 +101,7 @@ repeated-trial execution, per-trial coverage and matched comparisons, and the se
 AI-assisted review workflow. The retrospective 24-episode pilot audit is saved in
 `evidence/weeks8_9/pilot_ai_review.json`; it is not independent human validation.
 Run `sh scripts/run_weeks8_9.sh` to start or resume the frozen three-trial experiment.
+
+For the optional free-plan Groq alternative, see [Groq pilot setup](docs/GROQ_FREE_PILOT.md).
+It requires a local key and confirmation that the account is on the Free plan.
+No live Groq benchmark has been completed merely by installing this adapter.
