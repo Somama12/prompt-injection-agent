@@ -93,3 +93,15 @@ The fixed article, small hand-authored suite, temperature zero, single agent tas
 ## Midterm implementation changes
 
 Per-episode checkpoints and resume; configuration isolation; repeat support; clean controls; archived retries; error-aware reporting; corrected delivery scoring; strict judge booleans; guard fail-closed behavior; composite guard accounting; malformed action rejection; and human validation export/import were added for the midterm. These changes supersede earlier report statements describing those features as already completed.
+
+## Weeks 8–9 extension
+
+See [the Week 8–9 research log](docs/WEEKS_8_9.md) for the 80–85% acceptance target,
+repeated-trial execution, per-trial coverage and matched comparisons, and the separate
+AI-assisted review workflow. The retrospective 24-episode pilot audit is saved in
+`evidence/weeks8_9/pilot_ai_review.json`; it is not independent human validation.
+Run `sh scripts/run_weeks8_9.sh` to start or resume the frozen three-trial experiment.
+
+For the optional free-plan Groq alternative, see [Groq pilot setup](docs/GROQ_FREE_PILOT.md).
+It requires a local key and confirmation that the account is on the Free plan.
+No live Groq benchmark has been completed merely by installing this adapter.

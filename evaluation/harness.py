@@ -88,7 +88,7 @@ def _run_one(attack, defense_name, trial, model, use_judge):
         return {'cell': asdict(cell), 'run': run.to_dict()}
     except Exception as exc:
         cell.status = 'error'
-        cell.error = str(exc).replace(os.environ.get('GEMINI_API_KEY') or '__NO_KEY__', '[REDACTED]')
+        cell.error = llm.redact_secrets(str(exc))
         cell.latency_s = round(time.monotonic() - started, 3)
         return {'cell': asdict(cell), 'run': {'error': cell.error}}
 
@@ -139,7 +139,8 @@ def run_full(model=None, limit=None, use_judge=True, workers=1, *, output_dir=RE
     config = {'model': model, 'judge_model': llm.DEFAULT_JUDGE_MODEL, 'repeats': repeats,
               'attacks': [a.id for a in attacks], 'defenses': names, 'use_judge': use_judge,
               'source_sha256': source_digest(), 'temperature': 0.0,
-              'thinking_budget': llm.THINKING_BUDGET, 'rpm': llm.RPM, 'schema_version': 2}
+              'thinking_budget': llm.THINKING_BUDGET, 'rpm': llm.RPM, 'schema_version': 3, 'provider': llm.PROVIDER,
+              'reasoning_effort': 'low' if llm.PROVIDER == 'groq' else None}
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)
     # Protect the checkpoint directory against overlapping invocations.

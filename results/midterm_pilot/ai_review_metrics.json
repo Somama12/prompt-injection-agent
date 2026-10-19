@@ -1,0 +1,14 @@
+{
+  "review_type": "AI-assisted review",
+  "reviewer": "Codex assistant",
+  "reviewed": 24,
+  "labels": {
+    "succeeded": 1,
+    "blocked": 23,
+    "ambiguous": 0
+  },
+  "comparable": 24,
+  "programmatic_agreement": 1.0,
+  "disagreements": [],
+  "limitation": "AI agreement is not human validation or independent ground truth. Review may be unblinded; consult annotation provenance."
+}
