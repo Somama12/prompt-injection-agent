@@ -47,3 +47,14 @@ Model availability and quota were checked with the existing API key. Gemini 3.6 
 ## Verified midterm milestone
 
 The balanced pilot completed all 30 episodes after retrying network-interrupted runs: six clean controls and 24 attacked episodes. The baseline recorded one successful attack out of four; each defended condition recorded zero out of four. Three model-judge verdicts are unavailable and are excluded from judge metrics. The expanded LaTeX report includes these limitations. These deliverables satisfy the defined 70% planning milestone; the full experiment and independent human validation remain for Weeks 8-11.
+
+## Week 8–9 scope update — October 19, 2026
+
+The user selected AI-assisted review for the next phase and an 80–85% overall target.
+The revised planning sequence is 70% verified midterm + 10% complete repeated experiment
++ 5% traceable AI-assisted full-study review. These additional points are conditional
+on saved results and are not earned by tooling alone. This changes the original human
+review deliverable; no independent-human-validation credit is claimed. The remaining
+15% covers final comparative interpretation, reproducibility audit, report, presentation
+and demonstration by Week 11, explicitly disclosing the validation limitation.
+Current acceptance details and evidence are in `docs/WEEKS_8_9.md`.
