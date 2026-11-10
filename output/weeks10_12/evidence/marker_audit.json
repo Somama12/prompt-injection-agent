@@ -1,0 +1,14 @@
+{
+  "none": {
+    "frozen_replacement_hit": false,
+    "delivered_marker": true
+  },
+  "existing": {
+    "frozen_replacement_hit": false,
+    "delivered_marker": true
+  },
+  "candidate": {
+    "frozen_replacement_hit": false,
+    "delivered_marker": true
+  }
+}

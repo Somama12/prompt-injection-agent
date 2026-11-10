@@ -1,0 +1,242 @@
+[
+  {
+    "slot": "summarize.text",
+    "form": "literal",
+    "policy": "existing",
+    "allowed": false,
+    "executed": 0,
+    "scored_exposure": false
+  },
+  {
+    "slot": "summarize.text",
+    "form": "literal",
+    "policy": "candidate",
+    "allowed": false,
+    "executed": 0,
+    "scored_exposure": false
+  },
+  {
+    "slot": "summarize.text",
+    "form": "lowercase",
+    "policy": "existing",
+    "allowed": false,
+    "executed": 0,
+    "scored_exposure": false
+  },
+  {
+    "slot": "summarize.text",
+    "form": "lowercase",
+    "policy": "candidate",
+    "allowed": false,
+    "executed": 0,
+    "scored_exposure": false
+  },
+  {
+    "slot": "summarize.text",
+    "form": "compact",
+    "policy": "existing",
+    "allowed": true,
+    "executed": 1,
+    "scored_exposure": true
+  },
+  {
+    "slot": "summarize.text",
+    "form": "compact",
+    "policy": "candidate",
+    "allowed": false,
+    "executed": 0,
+    "scored_exposure": false
+  },
+  {
+    "slot": "summarize.text",
+    "form": "base64",
+    "policy": "existing",
+    "allowed": true,
+    "executed": 1,
+    "scored_exposure": true
+  },
+  {
+    "slot": "summarize.text",
+    "form": "base64",
+    "policy": "candidate",
+    "allowed": false,
+    "executed": 0,
+    "scored_exposure": false
+  },
+  {
+    "slot": "summarize.text",
+    "form": "benign",
+    "policy": "existing",
+    "allowed": true,
+    "executed": 1,
+    "scored_exposure": false
+  },
+  {
+    "slot": "summarize.text",
+    "form": "benign",
+    "policy": "candidate",
+    "allowed": true,
+    "executed": 1,
+    "scored_exposure": false
+  },
+  {
+    "slot": "send_email.subject",
+    "form": "literal",
+    "policy": "existing",
+    "allowed": false,
+    "executed": 0,
+    "scored_exposure": false
+  },
+  {
+    "slot": "send_email.subject",
+    "form": "literal",
+    "policy": "candidate",
+    "allowed": false,
+    "executed": 0,
+    "scored_exposure": false
+  },
+  {
+    "slot": "send_email.subject",
+    "form": "lowercase",
+    "policy": "existing",
+    "allowed": false,
+    "executed": 0,
+    "scored_exposure": false
+  },
+  {
+    "slot": "send_email.subject",
+    "form": "lowercase",
+    "policy": "candidate",
+    "allowed": false,
+    "executed": 0,
+    "scored_exposure": false
+  },
+  {
+    "slot": "send_email.subject",
+    "form": "compact",
+    "policy": "existing",
+    "allowed": true,
+    "executed": 1,
+    "scored_exposure": true
+  },
+  {
+    "slot": "send_email.subject",
+    "form": "compact",
+    "policy": "candidate",
+    "allowed": false,
+    "executed": 0,
+    "scored_exposure": false
+  },
+  {
+    "slot": "send_email.subject",
+    "form": "base64",
+    "policy": "existing",
+    "allowed": true,
+    "executed": 1,
+    "scored_exposure": true
+  },
+  {
+    "slot": "send_email.subject",
+    "form": "base64",
+    "policy": "candidate",
+    "allowed": false,
+    "executed": 0,
+    "scored_exposure": false
+  },
+  {
+    "slot": "send_email.subject",
+    "form": "benign",
+    "policy": "existing",
+    "allowed": true,
+    "executed": 1,
+    "scored_exposure": false
+  },
+  {
+    "slot": "send_email.subject",
+    "form": "benign",
+    "policy": "candidate",
+    "allowed": true,
+    "executed": 1,
+    "scored_exposure": false
+  },
+  {
+    "slot": "send_email.body",
+    "form": "literal",
+    "policy": "existing",
+    "allowed": false,
+    "executed": 0,
+    "scored_exposure": false
+  },
+  {
+    "slot": "send_email.body",
+    "form": "literal",
+    "policy": "candidate",
+    "allowed": false,
+    "executed": 0,
+    "scored_exposure": false
+  },
+  {
+    "slot": "send_email.body",
+    "form": "lowercase",
+    "policy": "existing",
+    "allowed": false,
+    "executed": 0,
+    "scored_exposure": false
+  },
+  {
+    "slot": "send_email.body",
+    "form": "lowercase",
+    "policy": "candidate",
+    "allowed": false,
+    "executed": 0,
+    "scored_exposure": false
+  },
+  {
+    "slot": "send_email.body",
+    "form": "compact",
+    "policy": "existing",
+    "allowed": true,
+    "executed": 1,
+    "scored_exposure": true
+  },
+  {
+    "slot": "send_email.body",
+    "form": "compact",
+    "policy": "candidate",
+    "allowed": false,
+    "executed": 0,
+    "scored_exposure": false
+  },
+  {
+    "slot": "send_email.body",
+    "form": "base64",
+    "policy": "existing",
+    "allowed": true,
+    "executed": 1,
+    "scored_exposure": true
+  },
+  {
+    "slot": "send_email.body",
+    "form": "base64",
+    "policy": "candidate",
+    "allowed": false,
+    "executed": 0,
+    "scored_exposure": false
+  },
+  {
+    "slot": "send_email.body",
+    "form": "benign",
+    "policy": "existing",
+    "allowed": true,
+    "executed": 1,
+    "scored_exposure": false
+  },
+  {
+    "slot": "send_email.body",
+    "form": "benign",
+    "policy": "candidate",
+    "allowed": true,
+    "executed": 1,
+    "scored_exposure": false
+  }
+]
