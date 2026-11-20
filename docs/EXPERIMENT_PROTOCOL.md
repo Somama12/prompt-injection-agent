@@ -12,9 +12,22 @@ Baseline, sanitization, instruction hierarchy, guard LLM, action allow-list, and
 
 One first-listed attack per category, six defenses, and six clean controls: 24 attacked episodes and six clean episodes. A single episode per cell is exploratory. It exercises every category and condition but does not estimate robustness over the entire 24-attack suite. The four selected attack IDs are do_01, rp_01, de_01, and fs_01 (verify the run manifest for the actual identifiers). The manifest is authoritative.
 
-## Full planned evaluation
+## Original midterm plan
 
 24 attacks x six conditions = 144 attacked episodes per trial; add six clean controls. With three trials this becomes 432 attacked episodes plus 18 clean controls. Use a separate output directory from the pilot. Repeat trials are repeated model observations, not independent attack designs. A secondary model is an extension after the primary evaluation is complete.
+
+## Week 12 revision (November 10, 2026)
+
+The primary question is how the six conditions compare across the full set of 24 attack designs. A secondary question is whether observed outcomes repeat for the four cases fixed in the midterm pilot. The revised target is 210 valid multi-step episodes on one model configuration.
+
+| Stage | Cases per condition | Conditions | New trials | Episodes |
+| --- | ---: | ---: | ---: | ---: |
+| Full comparison | 24 attack cases and one clean control | 6 | 1 | 150 |
+| Repeatability check | Four original pilot cases and one clean control | 6 | 2 | 60 |
+
+The revision follows a provider quota interruption and inspection of partial results. Reuse the four cases named in the midterm pilot above, which were selected before this revision. Retain all six conditions in both stages. Keep the model, judge, prompts, scoring rules and tool behavior fixed. The 36 valid first-trial Groq episodes already collected count toward the full comparison if collection continues under their recorded configuration. A switch to Kimi starts a new cohort. Record operational failures and retries separately.
+
+Use the first trial alone to compare attack success and legitimate task completion across all 24 designs, giving each design equal weight. Report clean-task outcomes separately. For each repeated case and defense, give the number of successes and valid trials, and identify any case whose outcome changed. The other 20 designs have one observation per condition, so their repeatability remains unknown. The separate final-email decision study supplies evidence about that single decision only.
 
 ## Outcome definitions
 
@@ -48,3 +61,10 @@ Save source fingerprint, model names, repeat count, selected attacks, controls, 
 ## Limits
 
 Small hand-authored attacks, a fixed synthetic article, one task, one pilot trial, a shared model family for agent/guard/judge, and heuristic outcome checks limit generalization. Keyword-based task checks can miss factual errors. Security findings concern this mock architecture only. The midterm is an implementation and feasibility milestone; a reliable defense ranking requires the full experiment and human review.
+
+
+## Final working research scope — November 20, 2026
+
+Following the discussion after the Week 12 report, completion is assessed against the matched eight-design Groq comparison, the repeated final-decision policy comparison and the 150-case Kimi clean-format study. The larger Kimi security grid becomes future work under this scope. The scope revision is retrospective. Instructor approval has not been recorded.
+
+The [research completion record](RESEARCH_COMPLETION.md) defines the completed checks, scientific limitations and reproducibility archive. Earlier milestone percentages describe historical plans. Final paper, presentation and GitHub publication remain project-delivery tasks.

@@ -58,3 +58,14 @@ review deliverable; no independent-human-validation credit is claimed. The remai
 15% covers final comparative interpretation, reproducibility audit, report, presentation
 and demonstration by Week 11, explicitly disclosing the validation limitation.
 Current acceptance details and evidence are in `docs/WEEKS_8_9.md`.
+
+## Week 12 scope revision (November 10, 2026)
+
+The final evaluation target is 210 valid full-agent episodes on one configuration. The first 150 cover the complete benchmark once. The remaining 60 repeat the four original pilot cases and the clean control twice under all six conditions. The full-evaluation milestone requires both stages, documented failures, and separate analyses of coverage and repeatability. See the [revised experiment protocol](EXPERIMENT_PROTOCOL.md#week-12-revision-november-10-2026). AI-assisted transcript review, the final interpretation, report and demo remain separate deliverables.
+
+
+## Final working research scope — November 20, 2026
+
+Following the discussion after the Week 12 report, completion is assessed against the matched eight-design Groq comparison, the repeated final-decision policy comparison and the 150-case Kimi clean-format study. The larger Kimi security grid becomes future work under this scope. The scope revision is retrospective. Instructor approval has not been recorded.
+
+The [research completion record](RESEARCH_COMPLETION.md) defines the completed checks, scientific limitations and reproducibility archive. Earlier milestone percentages describe historical plans. Final paper, presentation and GitHub publication remain project-delivery tasks.

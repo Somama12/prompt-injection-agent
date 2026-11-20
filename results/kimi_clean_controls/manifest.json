@@ -1,0 +1,9 @@
+{
+  "model": "kimi-k3.1-pro",
+  "page_sha256": "9e06c899304916f030a12aaa419adf27dc0bb276ef4d02d072e4bbb26a7dc242",
+  "code_sha256": "438c23f9d06da92fc451b4ccfb402ae61f5067aa7fadeaecba9d5aa4801da6f1",
+  "runner_sha256": "65a2ce252e8a1d1aa5e7ea94acc4825d463e8929aa07a3c46758d80d44d495ce",
+  "temperature": "provider default",
+  "scope": "18 clean controls",
+  "concurrent_episodes": 3
+}

@@ -10,4 +10,5 @@ mv "$p/review_comparison.json.tmp" "$p/review_comparison.json"
 .venv/bin/python -m evaluation.credential_probe > "$p/probe.json"
 .venv/bin/python -m evaluation.encoding_sensitivity > "$p/heldout.json"
 .venv/bin/python -m evaluation.target_action_matrix > "$p/action_matrix.json"
+.venv/bin/python -m evaluation.credential_repair_study "$p" "$p/credential_repair_results.json" > /dev/null
 .venv/bin/python -m pytest -q

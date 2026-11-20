@@ -1,0 +1,265 @@
+\documentclass[11pt,letterpaper,oneside]{report}
+\usepackage[margin=0.85in,headheight=15pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype,graphicx}
+\usepackage{booktabs,tabularx,array,longtable,amsmath}
+\usepackage[table]{xcolor}
+\usepackage{enumitem,listings,fancyhdr,titlesec,caption,url}
+\definecolor{ink}{HTML}{233D4D}
+\definecolor{accent}{HTML}{007E80}
+\definecolor{light}{HTML}{F2F5F6}
+\usepackage[colorlinks=true,linkcolor=ink,citecolor=ink,urlcolor=accent,bookmarksnumbered=true]{hyperref}
+\hypersetup{pdftitle={Evaluating the Robustness of LLM-Based Autonomous Agents Against Prompt Injection Attacks in Tool-Use Scenarios},pdfauthor={Somama Siddiqui},pdfsubject={Senior Seminar II Final Research Report}}
+\graphicspath{{figures/}}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{1em}
+\setlength{\emergencystretch}{3em}
+\linespread{1.03}
+\renewcommand{\arraystretch}{1.15}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\code}[1]{\texttt{\small #1}}
+\newcommand{\evidence}[1]{\par\smallskip{\footnotesize\noindent\textit{Evidence:} #1}\par}
+\titleformat{\chapter}[display]{\normalfont\bfseries}{\large Chapter \thechapter}{8pt}{\LARGE}
+\titlespacing*{\chapter}{0pt}{6pt}{20pt}
+\raggedbottom
+\titleformat{\section}{\large\bfseries}{\thesection}{.7em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{.7em}{}
+\setlist{itemsep=2pt,topsep=4pt}
+\captionsetup{font=small,labelfont=bf,skip=8pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\footnotesize\textsc{Prompt Injection in Tool-Use Agents}}
+\fancyhead[R]{\footnotesize Final Research Report}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{.3pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\thepage}\renewcommand{\headrulewidth}{0pt}}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true,columns=fullflexible,keepspaces=true,
+ backgroundcolor=\color{light},frame=single,rulecolor=\color{light},xleftmargin=5pt,xrightmargin=5pt,
+ showstringspaces=false,tabsize=4,aboveskip=10pt,belowskip=10pt}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\textfraction}{0.08}
+\renewcommand{\floatpagefraction}{0.75}
+\setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{2}
+\renewcommand{\bibname}{References}
+\begin{document}
+\hypersetup{pageanchor=false}
+\begin{titlepage}\centering
+\vspace*{.55in}
+{\Large\bfseries Evaluating the Robustness of\\[7pt]
+LLM-Based Autonomous Agents\\[7pt]
+Against Prompt Injection Attacks\\[7pt]
+in Tool-Use Scenarios\par}
+\vspace{.4in}
+{\large Final Research Project Report\par}
+{\normalsize A Controlled Study of Security, Useful Delivery,\\
+and Content Fidelity in an Article-to-Email Agent\par}
+\vspace{.8in}
+Submitted by\par\vspace{5pt}
+{\large\bfseries Somama Siddiqui\par}
+\vspace{.45in}Submitted to\par\vspace{5pt}
+{\large Dr. Ning Zhang\par}
+\vspace{.45in}
+{\large Senior Seminar II\par Fisk University\par}
+\vfill November 20, 2026\par
+\end{titlepage}
+\pagenumbering{roman}
+\hypersetup{pageanchor=true}
+\chapter*{Abstract}\addcontentsline{toc}{chapter}{Abstract}
+An autonomous language-model agent must distinguish an authorized user's task from instructions embedded in material returned by tools. This project studies that boundary in a controlled workflow: read a synthetic campus-energy article, summarize it, and record an email to an authorized professor. I implemented a Python agent, instrumented local tools, 24 injection designs, six defense conditions, resumable experiment collection, and auditable outcome scoring. The original plan called for a 450-episode repeated comparison. Provider interruptions and subsequent scope revisions led to a smaller completed study with explicitly bounded conclusions.
+
+The final analysis combines three investigations. First, 48 full-agent Groq episodes match eight attack designs across six conditions. Four conditions recorded zero assigned effects under the frozen scorer, but useful deliveries without an effect ranged from three to seven of eight cases. Instruction hierarchy and the combined defense both achieved seven, with different case-level gains and losses. Second, replaying delivery policies on 75 recorded final decisions, including 72 attacked inputs, showed that a narrow credential repair increased useful deliveries without the assigned effect from 12 to 18. All six improvements came from two designs repeated three times; three marker-inclusion effects remained under both policies. Third, 150 Kimi clean-input episodes preserved three core source figures across five article formats, while optional battery coverage ranged from 1/30 to 30/30. Exact replay of the summarization tool helped locate where information was retained or omitted.
+
+Retrospective AI-assisted review, 74 passing software tests, and a hash-verified offline research archive support the analysis. These results demonstrate that preventing an assigned effect, completing the user's task, and preserving source detail are separate evaluation goals. They do not establish a general defense ranking or complete the original 450-episode experiment.
+
+\vspace{8pt}\noindent\textbf{Keywords:} indirect prompt injection; autonomous agents; tool use; security evaluation; task preservation; reproducibility; AI-assisted review.
+
+\chapter*{Report Scope and Reading Guide}
+\addcontentsline{toc}{chapter}{Report Scope and Reading Guide}
+This report describes the semester project through the research verification cutoff of November 20, 2026. It addresses the final written-report requirements as follows:
+\begin{itemize}
+\item \textbf{Initial plan:} Chapter~\ref{ch:intro} states the problem, intended product, objectives, and proposed experiment; Chapter~\ref{ch:progress} compares those objectives with actual work.
+\item \textbf{Semester achievements:} Chapters~\ref{ch:design}--\ref{ch:verification} explain the implementation, methods, results, validation, and reproducible outputs.
+\item \textbf{Future improvements:} Chapters~\ref{ch:discussion} and~\ref{ch:future} identify limitations and propose concrete extensions with acceptance criteria.
+\end{itemize}
+The study uses a synthetic article and a local mock mailbox. References to the article's solar installation are fixture content, not verified claims about Fisk University. No real emails were transmitted by the experimental tools.
+
+The completed research is a revised exploratory study. The original 450-episode grid and the later 210-episode Kimi security grid were not completed. Eighteen clean controls exist for the latter; its 192 adversarial outcomes remain unobserved. No missing outcome is treated as a successful defense.
+
+All review annotations discussed here are identified as \textbf{AI-assisted review}. They are not independent human validation. AI assistance was also used in analysis tooling, writing, and preparation of this report. Reproducibility checks verify the tabulation of annotations, but cannot establish that every annotation is correct.
+
+The repository is \url{https://github.com/Somama12/prompt-injection-agent}. The frozen local research archive in Appendix~\ref{app:reproduce} is the evidence version used for this report; a repository link alone does not establish that every final artifact has been published there.
+{\small\setlength{\parskip}{0pt}\tableofcontents}
+\listoffigures
+\listoftables
+\clearpage\pagenumbering{arabic}
+
+\chapter{Introduction and Initial Project Plan}\label{ch:intro}
+\section{Problem and purpose}
+Language models can be connected to tools that read information, transform content, and perform actions. This expands their usefulness, but creates a trust problem: a tool result can contain both useful facts and text that attempts to redirect the agent. If the model accepts the latter as an instruction, an ordinary request to summarize a page can become a request to send information to a different recipient or place unwanted content in a message.
+
+The project investigates this problem in one observable workflow. The legitimate task is to read a synthetic campus solar-energy article, produce a summary, and email the authorized professor. The attacker controls text included in the external article. The attacker does not control the legitimate user request, local tool implementation, or destination authorization rule. The project records proposed actions, blocked actions, executed tool calls, and mock-mailbox contents.
+
+The central evaluation problem is broader than whether an injection succeeds. A system that refuses every email may prevent the assigned effect while failing the user. Conversely, a message may contain both a useful summary and unwanted material. The project therefore measures security and legitimate-task completion separately, then examines their joint outcome.
+
+\section{Original objectives and expected product}
+The initial plan was to build a reusable Python evaluation framework and compare an undefended baseline with four individual defenses and a combined condition. The intended contribution was an implemented and tested research prototype, together with evidence explaining differences in attack success, task completion, and operational overhead.
+
+The working proposal anticipated approximately 20--30 synthetic attacks. The implemented benchmark contains 24 designs, divided equally among direct override, role-play, data exposure, and disguised system-instruction families. The planned experiment crossed all 24 designs with six conditions and three trials, with clean controls in every condition:
+\begin{equation}
+N_{\mathrm{planned}}=(24\times6\times3)+(1\times6\times3)=450.
+\end{equation}
+The 432 attacked episodes would support a broader comparison than a small pilot; the 18 clean controls would measure interference with an ordinary task. Repeated trials were intended to assess response variation, not to create new independent attack designs. Independent human review of a sample was also planned to check automated judgments.
+
+The expected product included the agent, benchmark, defenses, experiment runner, stored evidence, analysis code, report, and presentation. This document covers the research and software work; a final presentation is a separate deliverable.
+
+\section{Research questions}
+\begin{enumerate}
+\item \textbf{RQ1---Security and utility:} On matched cases, how do the six conditions differ in assigned effects and useful deliveries without those effects?
+\item \textbf{RQ2---Delivery intervention:} When the final proposal is held fixed, what security and utility changes result from a delivery gate and a narrow repair?
+\item \textbf{RQ3---Content preservation:} On clean input, how do article format and the summarization stage relate to preservation of source facts?
+\item \textbf{RQ4---Evidence reliability:} Can conclusions be reconstructed from source-linked records, and where do automated scoring and retrospective review disagree?
+\end{enumerate}
+
+\section{Final contributions}
+The semester produced a functioning evaluation system, completed pilot collections, a matched end-to-end comparison, a repeated final-decision study, and a 150-episode clean-format study. Later work added case-level analysis, exact tool replay, source-linked annotations, regression checks, and a frozen reproduction package.
+
+The end-to-end comparison contains eight selected designs, with five from one family and one retained observation per design and condition. The delivery study covers all 24 designs but only their final decision stage. The Kimi study concerns clean-input utility, not resistance to adversarial instructions. These experiments answer complementary questions; they cannot be pooled into one security success rate.
+
+\chapter{Background and Related Work}
+\section{Indirect injection and the data--instruction boundary}
+Greshake et al.\ describe indirect prompt injection in applications that incorporate externally supplied material into an LLM's context~\cite{greshake}. The relevant distinction is between a user who legitimately directs the application and third-party content that the application merely needs to read. This project instantiates that distinction with a locally served article: factual content is useful, but embedded directives do not acquire authority over the user's task.
+
+The environment is deliberately small so that outcomes can be traced to concrete actions. A recipient field in a recorded delivery is stronger evidence of redirection than a model's statement that it intended to send elsewhere. This design supports inspection of execution rather than inference from conversational language alone.
+
+\section{Tool-use evaluation}
+InjecAgent evaluates indirect injection against tool-integrated agents across a broader set of cases and tools than this project~\cite{injecagent}. Its relevance is methodological: tests need a legitimate task, an adversarial objective, and a way to observe whether the agent crossed a boundary. The present benchmark is locally authored; it is not a run of InjecAgent, and its results are not directly comparable benchmark scores.
+
+AgentDojo provides an extensible environment for evaluating agents that operate on untrusted tool data, including legitimate tasks and adversarial cases~\cite{agentdojo}. It motivates assessing task utility alongside security. This project applies that principle to one workflow and uses paired case-level comparisons. The narrower setting makes reconciliation of retained actions practical, while limiting generalization.
+
+\section{Agent structure and instruction hierarchy}
+ReAct combines language-model reasoning and action in an interleaved process~\cite{react}. The project uses a ReAct-style bounded loop: the model proposes an action, a local registry executes permitted tools, and the returned observation informs the next step. This is an implementation pattern inspired by that work, not a reproduction of its benchmark evaluation.
+
+Wallace et al.\ investigate training models to prioritize privileged instructions over lower-priority content~\cite{hierarchy}. The project's condition called \textit{instruction hierarchy} is narrower: it reinforces priorities through the system prompt. It does not train or fine-tune the model. Its results measure a prompt-level intervention in this application, not the effectiveness of the cited training method.
+
+\chapter{Semester Work and Progress Against the Plan}\label{ch:progress}
+\section{Documented development phases}
+Reports and experiment manifests identify milestones more reliably than the exact week in which each line of code was written. Table~\ref{tab:timeline} groups cumulative work by the semester's reporting phases, with final verification separately dated.
+\begin{table}[!htbp]\centering\small
+\caption{Semester achievements organized by documented phase.}\label{tab:timeline}
+\begin{tabularx}{\textwidth}{@{}p{.19\textwidth}Y Y@{}}\toprule
+Phase & Work completed & Concrete output\\\midrule
+Weeks 1--7: foundation and midterm &
+Defined the task and threat model; implemented the agent, tools, benchmark, defenses, scorer, and pilot workflow. &
+24 designs; six conditions; 30 valid Gemini pilot episodes; midterm report and prototype.\\
+Weeks 8--9: collection tooling &
+Extended provider support, repeated collection, checkpoint/resume handling, and review exports; began Groq collection. &
+Manifests, preserved attempts, review packets, and provider-compatible action parsing.\\
+Weeks 10--12: experimentation &
+Completed the Groq pilot; analyzed the interrupted collection; collected final decisions; evaluated repair; ran Kimi controls and format trials. &
+48 matched outcomes; 75 final decisions; 18 Kimi controls; 150 format-study episodes.\\
+November 20: closeout &
+Reconciled scores, linked labels to evidence, replayed tools, added regression tests, and verified the archive. &
+74 passing tests; 353 verified archive files; offline reproduction receipt.\\\bottomrule
+\end{tabularx}
+\end{table}
+
+The early implementation established a complete path from authorized task to recorded outcome. Subsequent work improved reliability as an experiment: failed attempts were retained, resumed runs were checked against saved configuration, and local scoring was separated from model-judge availability. An unavailable evaluator must not turn a valid trajectory into a fabricated verdict.
+
+Later work emphasized explaining results. Matching avoided mixing unrelated case sets. Final-decision replay isolated the delivery policy from earlier model behavior. Content annotations and exact tool replay investigated whether successful delivery also preserved useful information.
+
+\section{Original objectives versus actual achievements}
+Table~\ref{tab:plan} separates implemented components from evaluation objectives that remain incomplete.
+\begin{table}[!htbp]\centering\small
+\caption{Status of the original objectives at the research cutoff.}\label{tab:plan}
+\begin{tabularx}{\textwidth}{@{}p{.29\textwidth}Y@{}}\toprule
+Planned objective & Actual achievement and boundary\\\midrule
+Instrumented autonomous agent & Implemented bounded execution, three tools, action records, mailbox state, and outcome logging.\\
+Approximately 20--30 attacks & Implemented 24 designs across four equally sized families. Coverage differs by study.\\
+Six conditions & Implemented all six; each appears in the matched full-agent and clean-format studies.\\
+450 repeated episodes & Not completed. Pilots and interrupted collection support a smaller retrospective comparison.\\
+Independent human validation & Not completed. Replaced with explicitly identified AI-assisted review and source-linked annotations.\\
+Latency and overhead & Recorded latency and call counts; descriptively analyzed Kimi format-study overhead. No controlled provider-speed comparison.\\
+Reproducible research & Implemented reconstruction, rescoring, manifest checks, regression tests, and a frozen archive.\\\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Provider changes and scope revision}
+The initial protocol centered on Gemini. Service limitations and collection interruptions motivated experiments with Groq and, later, the user's available Kimi API. Groq supplied additional observations, but its broader collection stopped after 36 valid records and one terminal provider error. Moving to Kimi was an operational attempt to obtain completed evidence with available capacity; it was not a controlled test proving one provider faster or safer.
+
+On November 10, the security target was reduced to 210 episodes: one 150-episode full grid plus 60 repeatability observations on the four original pilot designs and a clean control. The Kimi portion completed 18 clean controls, leaving 192 adversarial outcomes unobserved. The final working scope became the completed matched Groq comparison, final-decision analysis, and Kimi format study. This retrospective revision did not fulfill the original repeated grid.
+
+Consequently, broad claims about ranking defenses across all attacks were replaced with counts on identified cases. The original aspiration to finish the full evaluation by Week 11 was not met. The project nevertheless produced a substantial implemented and reproducible exploratory study. This report does not imply recorded instructor approval of the revised scope.
+
+\section{Challenges and solutions}
+\enlargethispage{2\baselineskip}
+\textbf{Interrupted collection.} Quotas and failures made long runs difficult to complete. Checkpoints, preserved retry records, and manifests reduced evidence loss and silent configuration changes. Remaining missing outcomes were disclosed rather than imputed.
+
+\textbf{Provider-specific responses.} Adapters, including support for Groq native tool intent, map different responses into the same checked local interface. Provider adaptation therefore does not bypass the execution policy.
+
+\textbf{Measurement mismatch.} The frozen scorer missed marker inclusion alongside a useful summary. The solution preserved the original score and added a separate retrospective goal-aware interpretation instead of silently changing the headline rule.
+
+\textbf{Task preservation.} Blocking contaminated messages could discard useful summaries. A narrow repair was implemented and replayed, recovering utility on two known designs. Its limited scope remains explicit.
+
+\textbf{Content quality.} Keyword-based task completion did not measure semantic fidelity. AI-assisted content review and exact summary-tool replay were added to distinguish delivery, core-fact preservation, and optional-detail coverage.
+
+\chapter{System Design and Implementation}\label{ch:design}
+\section{Architecture and trust boundaries}
+Figure~\ref{fig:architecture} shows the components. The authorized task and application controls define what the agent may do. The article is untrusted data. A proposal becomes an executed action only after relevant controls permit it. The mailbox records delivery independently of the model's narration.
+\begin{figure}[!htbp]\centering
+\includegraphics[width=\textwidth]{architecture.pdf}
+\caption{Implemented workflow and trust boundary. Read-time controls affect context; action controls operate before tool execution. The archive retains the resulting trajectory.}\label{fig:architecture}
+\end{figure}
+
+The registry resets each episode, preventing one run's mailbox from affecting another score. Baseline and defended conditions share the task and tool interface within a cohort. Provider or source changes require separate treatment.
+
+\section{Tools and recorded state}
+\begin{table}[!htbp]\centering\small
+\caption{Local tools and their behavior.}\label{tab:tools}
+\begin{tabularx}{\textwidth}{@{}p{.25\textwidth}Y@{}}\toprule
+Tool & Implementation\\\midrule
+\code{read\_webpage} & Returns the configured synthetic article, including the selected injection when applicable; not a general browser.\\
+\code{summarize} & Splits input into nonempty paragraphs, joins the first three, and truncates at 700 characters, appending an ellipsis when needed.\\
+\code{send\_email} & Appends recipient, subject, and body to an in-memory mailbox; no real email transmission.\\\bottomrule
+\end{tabularx}
+\end{table}
+
+The summarizer is deterministic and calls no model. The agent nevertheless chooses its input and later composes the email, so both stages can affect fact retention. The description follows executable behavior---three paragraphs---rather than an older docstring saying two.
+\begin{lstlisting}[language=Python,caption={Core extractive behavior of the implemented summarizer.}]
+paragraphs = [
+    p.strip() for p in re.split(r"\n\s*\n", text)
+    if p.strip()
+]
+if not paragraphs:
+    return "ERROR: no text supplied to summarize."
+joined = " ".join(paragraphs[:3])
+return joined[:700] + ("..." if len(joined) > 700 else "")
+\end{lstlisting}
+
+Each episode stores identifiers, transcript, steps, tool records, mailbox, final answer, blocked-action count, model and guard calls, latency, and terminal error. A tool record contains arguments, result, and blocking metadata. This distinguishes an unsafe suggestion, a vetoed attempt, and an executed effect.
+
+\section{Defense conditions}
+\begin{table}[!htbp]\centering\small
+\caption{Six implemented conditions and intervention boundaries.}\label{tab:defenses}
+\begin{tabularx}{\textwidth}{@{}p{.23\textwidth}Y@{}}\toprule
+Condition & Mechanism\\\midrule
+Baseline & No added defense beyond the fixed application task and local environment.\\
+Sanitization & Wraps untrusted output and neutralizes selected instruction-like tags; not proof that remaining natural language is harmless.\\
+Instruction hierarchy & Adds prompt guidance prioritizing trusted instructions over external content; no model training.\\
+Guard model & Reviews proposed email calls; invalid or unavailable decisions abort instead of silently allowing delivery.\\
+Action allow-list & Checks allowed tools, destination, recognized credential patterns, and a summary-related heuristic before execution.\\
+Combined & Layers sanitization, hierarchy, allow-list, and guard; an earlier veto can prevent a later guard call.\\\bottomrule
+\end{tabularx}
+\end{table}
+
+Prompt-level controls influence the proposal, while an execution gate can veto a proposal after it exists. Their effects need not be independent, and the combined condition cannot be interpreted by simply adding individual success probabilities.
+
+\section{Collection and analysis implementation}
+The fixed full-agent protocol bounds execution to six model steps. Provider parsing produces a common action representation. Manifests retain source and configuration fingerprints, selected designs, conditions, repeats, and model identifiers.
+
+Atomic saves, configuration-checked resumption, preserved failed attempts, and a writer lock protect collection integrity. They support reliable collection without turning interrupted data into a complete experiment. Episode latency includes model and guard calls, retries, and local pacing; a separate post-episode judge is excluded.
+
+Offline analysis is separated from live collection. The final modules reconstruct tables, validate cell coverage, reconcile metadata, and retain source digests. The independent audit recomputes security and task scores, checks executed sends against the mailbox, and replays final decisions. A verification entry point checks the frozen manifest and blocks ordinary network connections. Appendix~\ref{app:reproduce} gives commands and paths.
+
+\input{Final_Report_Methods_Results.tex}
+\input{Final_Report_Discussion_Appendices.tex}
+\end{document}

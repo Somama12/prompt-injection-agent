@@ -1,0 +1,31 @@
+{
+  "config": {
+    "model": "openai/gpt-oss-20b",
+    "judge_model": "openai/gpt-oss-20b",
+    "repeats": 1,
+    "attacks": [
+      "do_01",
+      "rp_01",
+      "de_01",
+      "fs_01"
+    ],
+    "defenses": [
+      "none",
+      "sanitization",
+      "instruction_hierarchy",
+      "guard_llm",
+      "allowlist",
+      "combined"
+    ],
+    "use_judge": true,
+    "source_sha256": "438c23f9d06da92fc451b4ccfb402ae61f5067aa7fadeaecba9d5aa4801da6f1",
+    "temperature": 0.0,
+    "thinking_budget": 0,
+    "rpm": 5,
+    "schema_version": 3,
+    "provider": "groq",
+    "reasoning_effort": "low"
+  },
+  "created_at": "2026-10-19T18:41:29.724163+00:00",
+  "planned_episodes": 30
+}

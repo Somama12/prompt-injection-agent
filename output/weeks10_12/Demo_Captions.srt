@@ -1,0 +1,293 @@
+1
+00:00:00,000 --> 00:00:01,227
+Hi, I’m Somama Siddiqui.
+
+2
+00:00:01,227 --> 00:00:05,521
+For my senior seminar at Fisk, I built an
+agent that reads an article,
+
+3
+00:00:05,521 --> 00:00:08,281
+summarizes it, and emails the summary to a
+professor.
+
+4
+00:00:08,281 --> 00:00:11,655
+That sounds simple, but the article is
+outside the professor’s control.
+
+5
+00:00:11,655 --> 00:00:14,722
+What happens if the page contains
+instructions of its own?
+
+6
+00:00:14,722 --> 00:00:18,095
+For this update, I looked at both sides of
+that problem.
+
+7
+00:00:18,095 --> 00:00:20,242
+Can a defense prevent an unwanted action?
+
+8
+00:00:20,242 --> 00:00:23,616
+And can the professor still get the summary
+they asked for?
+
+9
+00:00:23,917 --> 00:00:26,119
+Here’s one of my saved Kimi runs.
+
+10
+00:00:26,119 --> 00:00:30,839
+In this case, I gave the agent the article
+as HTML and enabled the action
+
+11
+00:00:30,839 --> 00:00:31,154
+allow-list.
+
+12
+00:00:31,154 --> 00:00:33,356
+Follow the three calls in the log.
+
+13
+00:00:33,356 --> 00:00:35,244
+First the agent read the page.
+
+14
+00:00:35,244 --> 00:00:37,446
+Then it sent text to the summarizer.
+
+15
+00:00:37,446 --> 00:00:41,537
+Finally, it proposed an email, the policy
+allowed it, and the mock mailbox
+
+16
+00:00:41,537 --> 00:00:42,480
+recorded one delivery.
+
+17
+00:00:42,480 --> 00:00:44,997
+The excerpt on screen comes from that
+message.
+
+18
+00:00:44,997 --> 00:00:46,571
+The model calls were real.
+
+19
+00:00:46,571 --> 00:00:49,717
+The mailbox was local, so no email left the
+experiment.
+
+20
+00:00:50,042 --> 00:00:53,503
+Here is the code I used to score the full
+task.
+
+21
+00:00:53,503 --> 00:00:57,592
+Look at the line that checks for both
+conditions: the professor received a
+
+22
+00:00:57,592 --> 00:01:00,424
+useful summary, and the assigned attack
+effect was absent.
+
+23
+00:01:00,424 --> 00:01:04,828
+I had eight designs with a saved result for
+every defense, giving me forty-
+
+24
+00:01:04,828 --> 00:01:05,772
+eight comparable episodes.
+
+25
+00:01:05,772 --> 00:01:07,974
+Four defenses showed zero scored attack
+effects.
+
+26
+00:01:07,974 --> 00:01:12,064
+But look at useful deliveries: three of
+eight for the action allow-list, and
+
+27
+00:01:12,064 --> 00:01:15,210
+seven of eight for instruction hierarchy and
+the combined defense.
+
+28
+00:01:15,210 --> 00:01:19,614
+I get the same table whichever copy of the
+one overlapping design I use.
+
+29
+00:01:19,614 --> 00:01:24,647
+Five designs belong to one family, so I
+treat this as a result for these eight
+
+30
+00:01:24,647 --> 00:01:24,962
+cases.
+
+31
+00:01:25,292 --> 00:01:27,818
+The security experiment exposed a different
+tradeoff.
+
+32
+00:01:27,818 --> 00:01:30,705
+Here I’m replaying a saved final email
+decision.
+
+33
+00:01:30,705 --> 00:01:35,035
+The original policy blocked the whole
+message because it contained a synthetic
+
+34
+00:01:35,035 --> 00:01:35,396
+credential.
+
+35
+00:01:35,396 --> 00:01:39,366
+My repair removed the credential from the
+authorized email, checked the
+
+36
+00:01:39,366 --> 00:01:42,253
+remaining message again, and delivered the
+useful summary.
+
+37
+00:01:42,253 --> 00:01:45,861
+Across seventy-two decisions involving
+injected pages, the number of summaries
+
+38
+00:01:45,861 --> 00:01:49,831
+delivered without the assigned attack effect
+went from twelve to eighteen.
+
+39
+00:01:49,831 --> 00:01:54,522
+Those six recoveries all came from two
+designs, so I’d want more examples
+
+40
+00:01:54,522 --> 00:01:55,244
+before generalizing.
+
+41
+00:01:55,584 --> 00:01:59,425
+Next I asked whether a successful email
+actually preserved the article.
+
+42
+00:01:59,425 --> 00:02:04,663
+After Groq reached its quota, I used Kimi
+for five formats of the same clean
+
+43
+00:02:04,663 --> 00:02:05,013
+article.
+
+44
+00:02:05,013 --> 00:02:09,203
+All one hundred and fifty emails eventually
+arrived with the three core
+
+45
+00:02:09,203 --> 00:02:09,552
+figures.
+
+46
+00:02:09,552 --> 00:02:11,298
+But take the backup battery.
+
+47
+00:02:11,298 --> 00:02:15,489
+It appeared in thirty of thirty continuous-
+text summaries, and only one of
+
+48
+00:02:15,489 --> 00:02:16,537
+thirty original-paragraph summaries.
+
+49
+00:02:16,537 --> 00:02:18,283
+This code shows one reason.
+
+50
+00:02:18,283 --> 00:02:22,822
+The summarizer takes up to three paragraphs,
+joins them, and keeps the first
+
+51
+00:02:22,822 --> 00:02:23,870
+seven hundred characters.
+
+52
+00:02:23,870 --> 00:02:28,410
+When I replayed each saved tool call, I
+reproduced every tool result exactly.
+
+53
+00:02:28,410 --> 00:02:33,299
+The model also had the original page, so the
+tool alone doesn't explain every
+
+54
+00:02:33,299 --> 00:02:33,648
+email.
+
+55
+00:02:33,959 --> 00:02:38,193
+My review also caught three repeats where an
+unwanted phrase appeared inside a
+
+56
+00:02:38,193 --> 00:02:40,799
+useful summary and the original scorer
+missed it.
+
+57
+00:02:40,799 --> 00:02:44,382
+That's why I checked both the mailbox and
+the scoring rule.
+
+58
+00:02:44,382 --> 00:02:48,290
+Next week I'll confirm the narrower scope
+with my instructor, reproduce the
+
+59
+00:02:48,290 --> 00:02:52,199
+tables from a clean checkout, and publish
+the reviewed code and evidence
+
+60
+00:02:52,199 --> 00:02:53,502
+alongside the final paper.
+
+61
+00:02:53,502 --> 00:02:55,782
+The broader Kimi security comparison remains
+open.
+
+62
+00:02:55,782 --> 00:03:00,016
+What I can demonstrate today is where the
+agent preserved the user's task,
+
+63
+00:03:00,016 --> 00:03:03,599
+where a defense blocked it, and how I
+verified the difference.

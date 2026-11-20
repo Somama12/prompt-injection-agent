@@ -32,3 +32,13 @@ results/**/human_review/
 results/**/.run.lock
 results/**/review_mapping.json
 tmp/
+
+# Document build intermediates and local collection locks
+output/**/*.aux
+output/**/*.log
+output/**/*.toc
+output/**/*.lof
+output/**/*.lot
+output/**/*.out
+results/**/.lock
+output/weeks8_9/media/
