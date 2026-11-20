@@ -1,5 +1,40 @@
 # Prompt injection evaluation for tool-using agents
 
+## Current research snapshot — November 20, 2026
+
+The completed working study compares 48 matched full-agent Groq episodes, 75 recorded final decisions, and 150 Kimi clean-format episodes. Its findings cover security, useful delivery and content fidelity. The broader experiment described in the historical setup below remains an extension.
+
+See [the research completion record](docs/RESEARCH_COMPLETION.md) for scope, limitations and reproduction. Download the [self-contained research archive](output/research_final/Research_Snapshot_Somama_Siddiqui.zip), extract it into an empty directory, and run
+
+    python3 -m scripts.verify_research_snapshot
+
+This verifies hashes and rebuilds the tables without API access. Add --rescore to verify recorded scores and local policy replays with the project dependencies installed.
+
+The review is AI-assisted and retrospective. The earlier human-label workflow remains available for an independent reviewer.
+
+## Final report and project deliverables
+
+- [Final research paper (PDF)](output/pdf/Final_Report_Somama_Siddiqui.pdf): original plan, semester achievements, architecture, methods, results, limitations, future work, and reproduction appendices.
+- [Editable LaTeX source and figures](output/pdf/Final_Report_LaTeX_Source.zip), or [main LaTeX file](output/pdf/Final_Report_Somama_Siddiqui.tex).
+- [Weeks 10–12 progress report](output/weeks10_12/Progress_Report_Weeks_10_12_Somama_Siddiqui.pdf) and [video demonstration](output/weeks10_12/Project_Demo_Weeks_10_12.mp4).
+- [Weeks 8–9 progress report](output/weeks8_9/Progress_Report_Weeks_8_9_Somama_Siddiqui.pdf) and [presentation](output/weeks8_9/Project_Presentation_Weeks_8_9.mp4).
+- [Research verification receipt](output/research_final/reproduction_receipt.json) and [recorded test results](output/research_final/software_tests.txt).
+
+The final paper describes the November 20 evidence cutoff. The videos are earlier progress demonstrations; a final presentation remains a separate deliverable. The original 450-episode grid was not completed, and the Kimi clean-format study does not establish adversarial robustness.
+
+The repository includes the source records needed to reconstruct the completed analyses. With the dependencies installed, run these offline commands from the project root:
+
+```sh
+python -m pytest -q
+python -m evaluation.archived_security_comparison
+python -m evaluation.archived_findings
+python -m scripts.audit_saved_research
+```
+
+To rebuild the paper, run `tectonic output/pdf/Final_Report_Somama_Siddiqui.tex`. Its vector figures are included; `python report/build_final_figures.py` regenerates them from the counts reported in the verified analysis.
+
+## Historical experiment setup
+
 A controlled empirical study of a Gemini-powered agent reading a synthetic news article, summarizing it, and sending a mock email. The tools never access a real webpage or mailbox. The session credential is a fixed synthetic canary.
 
 ## Experiment

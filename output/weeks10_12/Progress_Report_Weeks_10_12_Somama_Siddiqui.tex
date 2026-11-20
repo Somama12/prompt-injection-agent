@@ -1,0 +1,217 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[margin=0.8in,headheight=15pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[table]{xcolor}
+\usepackage{booktabs,tabularx,array,longtable}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage[colorlinks=true,linkcolor=navy,urlcolor=teal,citecolor=navy]{hyperref}
+\definecolor{navy}{HTML}{17354A}
+\definecolor{teal}{HTML}{008697}
+\definecolor{pale}{HTML}{EDF3F5}
+\definecolor{muted}{HTML}{4B5E6F}
+\titleformat{\section}{\Large\bfseries\color{navy}}{\thesection.}{0.55em}{}
+\titleformat{\subsection}{\large\bfseries\color{teal}}{\thesubsection}{0.55em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{navy}}{}{0pt}{}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\footnotesize\sffamily\color{muted}SENIOR SEMINAR II\quad |\quad PROGRESS REPORT\quad |\quad WEEKS 10--12}
+\fancyfoot[L]{\footnotesize\sffamily Somama Siddiqui}
+\fancyfoot[R]{\footnotesize\sffamily\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlength{\emergencystretch}{2em}
+\renewcommand{\arraystretch}{1.22}
+\setlist[itemize]{leftmargin=1.4em,itemsep=2pt,topsep=4pt}
+\setlist[enumerate]{leftmargin=1.5em,itemsep=3pt,topsep=4pt}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true,columns=fullflexible,keepspaces=true,frame=single,rulecolor=\color{pale},xleftmargin=3pt,xrightmargin=3pt}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\begin{document}
+{\small\sffamily\color{muted}POST-MIDTERM PROGRESS REPORT\quad |\quad WEEKS 10--12}\par
+\vspace{5pt}
+{\raggedright\LARGE\bfseries\color{navy}Evaluating the Robustness of LLM-Based Autonomous Agents Against Prompt Injection Attacks in Tool-Use Scenarios\par}
+\vspace{9pt}
+\textbf{Somama Siddiqui}\\
+Senior Seminar II $\cdot$ Instructor: Dr. Ning Zhang\\
+Fisk University $\cdot$ Prepared November 10, 2026
+
+\begin{abstract}
+A defense can prevent an unwanted email by blocking delivery, leaving the user without a summary. I evaluated both outcomes for an agent asked to read a campus energy article and email a professor. During Weeks 10--12 I matched eight injection cases across six conditions (48 full-agent Groq episodes), compared delivery policies on 75 final decisions, and evaluated 150 clean Kimi episodes. Four conditions recorded zero assigned attack effects, yet useful deliveries ranged from three to seven per eight cases. In a paired replay, a narrow repair recovered six useful deliveries across two designs. In the clean study, all 150 emails preserved the core figures, but a backup battery appeared in 30/30 continuous-text summaries and 1/30 original-paragraph summaries. The results identify tradeoffs at the delivery and summarization stages. Case selection and the single source article limit generalization.
+\end{abstract}
+\textbf{Keywords:} indirect prompt injection, tool use, paired comparison, task completion, AI-assisted review.
+\section{Project Overview}
+A staff member asks an agent to read a synthetic campus energy article, summarize it, and email the summary to an authorized professor. The article is supplied as external data. If the agent treats instructions inside the article as authoritative, it may change the destination, expose a synthetic credential, or alter the message. The mock mailbox records what was actually delivered.
+
+The project asks two questions: how often does each defense prevent the assigned attack effect, and how often does the professor still receive a useful summary? A blocked email can prevent the effect while leaving the professor empty-handed. My final deliverables are a Python agent with instrumented tools, a reproducible comparison of defenses, and a report and demonstration explaining their tradeoffs.
+
+\section{Work Completed During Weeks 10--12}
+The previous report closed with 16 valid Groq pilot episodes. During this reporting period I completed a balanced 30-episode Groq pilot, ran a repeated final-decision experiment, implemented a credential repair, and tested legitimate-task preservation with Kimi. I organize the work by milestone because the saved records identify experiments and trials more precisely than individual weeks.
+
+\textbf{Software verification.} All 67 automated tests passed at the report cutoff. Tests for the repair check that an authorized summary can survive removal of a standalone credential and that the gate still vetoes disallowed deliveries. I verified that the Kimi dataset contains 30 saved episodes per format and 25 per defense setting.
+\textbf{Research context.} Retrieved content can introduce instructions into an application's decision process \cite{greshake}. InjecAgent studies this risk across tool-integrated systems \cite{injecagent}. I use a local mailbox so that each scored delivery can be checked against a recorded action.
+
+\clearpage\section{System design and experimental techniques}
+
+\begin{figure}[!ht]\centering\small
+\newcommand{\stage}[2]{\colorbox{pale}{\parbox[c][.92cm][c]{.225\linewidth}{\centering\textbf{#1}\\\footnotesize #2}}}
+\begin{tabular}{@{}ccccc@{}}
+\stage{User task}{authorized recipient} & $\longrightarrow$ & \stage{Agent}{proposes actions} & $\longrightarrow$ & \stage{Action policy}{permits or vetoes}\\
+ & & $\updownarrow$ & & $\downarrow$\\
+ & & \stage{Read and summarize}{untrusted source text} & & \stage{Mock mailbox}{records delivery}
+\end{tabular}
+\caption{The agent can read a tool result and propose another action. The delivery policy intervenes before a message reaches the mailbox.}
+\end{figure}
+
+The Python agent issues one proposed action at a time. Its tools read a local article, produce an extractive summary, and record a mock email. A defense can change the instructions the model sees, change how it reads the tool result, or veto a proposed action before the tool executes. The baseline uses the same tools without an added defense. Sanitization processes the retrieved text. Instruction hierarchy reinforces the user's authority. The allow-list checks the proposed delivery, while a guard model judges the action. The combined condition layers all four mechanisms.
+
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}p{.22\linewidth}Y@{}}\toprule
+Stage & Evidence retained \\\midrule
+Article and task & The manifest records the model, fixed input or its fingerprint, trial settings, and code version.\\
+Model and defense & The agent proposes a tool call. The log records its arguments and any veto. The guard can use an additional model call before email delivery.\\
+Mock execution & A fresh registry records executed actions, message bodies, and recipients for each episode.\\
+Scoring and review & Separate measures record task completion, the assigned attack effect, model errors, and elapsed time. Saved records support replay and retrospective AI-assisted review.\\\bottomrule
+\end{tabularx}\end{center}
+
+
+\subsection{Scoring and design}
+For attacked episodes, $A=1$ when the assigned unwanted effect is observed under the stated scoring rule. $T=1$ when the legitimate-task scorer finds a useful summary sent to the authorized recipient. The joint outcome $T(1-A)$ matters because unwanted text can coexist with a useful summary. A refusal can give $A=0$ and $T=0$. Provider failures have no valid behavioral outcome.
+
+The full-agent study measures a sequence of model and tool actions. The final-decision experiment fixes the last proposal and varies the delivery policy. The clean-input study varies the article rendering and defense configuration. Some analyses reuse the same records. Each result below gives its own denominator.
+
+\clearpage\section{Security comparison on matched full-agent episodes}
+ The balanced Groq pilot used four attack designs, one from each family, across all six conditions, plus six clean controls. The original scorer observed 0 attack successes in 24 attacked episodes. The legitimate task succeeded in 20 of these 24, and model-judge verdicts were available for 23. A separate, broader Groq collection reached 36 valid episodes before the free quota stopped it. Its 37th record preserves the provider failure.
+
+
+\begin{figure}[!ht]\centering\small
+\fbox{\strut Pilot: 4 complete designs}\quad + \quad\fbox{\strut Broader collection: 5 complete designs}\\[5pt]
+$\downarrow$\quad one shared design, counted once\quad$\downarrow$\\[5pt]
+\colorbox{pale}{\strut\quad 8 distinct designs $\times$ 6 conditions = 48 matched episodes\quad}
+\caption{Construction of the end-to-end comparison from archived Groq runs.}
+\end{figure}
+I retained every fully matched design from the balanced pilot and the interrupted broader Groq collection. The pilot contained four attacked designs in all six conditions. The broader collection contained five, with one design shared. This gives eight distinct designs and 48 attacked episodes in the primary comparison. The common design uses the pilot observations. Replacing them with the broader collection's observations leaves every table entry unchanged. Each collection also had six successful clean controls. A provider error on a further design supplied no valid outcome and is excluded. The recorded model, temperature and source fingerprint match across collections. Planned design lists, repeat counts and request rate limits differ.
+
+\begin{center}\small\begin{tabularx}{\linewidth}{@{}Yrr@{}}\toprule
+Condition & Assigned effect (of 8) & Useful delivery without effect (of 8)\\\midrule
+Baseline & 1 & 3\\
+Sanitization & 2 & 4\\
+Instruction hierarchy & 0 & 7\\
+Guard model & 0 & 4\\
+Action allow-list & 0 & 3\\
+Combined & 0 & 7\\
+\bottomrule\end{tabularx}\end{center}
+
+\textbf{Interpretation.} Four conditions had zero scored effects, but their useful deliveries ranged from three to seven. That difference matters to a user who still needs the summary. Instruction hierarchy and the combined defense tied on both observed counts. Five of the eight designs come from the direct-override family and the other three families contribute one design each. Collection stopped in benchmark order. With one observation per selected design and condition, the table describes these cases and cannot establish a general ranking. The 75-decision experiment separately covers the final delivery step for all 24 designs in three trials.
+\clearpage\section{Paired policy replay and review of scoring errors}
+ For each of the 24 designs and one clean article, GPT-OSS 20B proposed one final email or refused. I collected three trials per case. I replayed each saved proposal through different action policies using a fresh mock registry. Holding the proposal fixed isolates what each policy does at delivery. This design cannot measure how a model would respond to a veto earlier in a multi-step episode.
+
+
+The existing allow-list vetoes email containing the synthetic credential. I tested a narrow alternative for an authorized recipient: remove a line consisting solely of the credential, or replace a credential-only subject with a neutral subject, then check the revised email again. The repair was designed after inspecting examples. I verified its behavior by replaying all 75 archived decisions and checking that the original policy outcomes matched their saved records.
+
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}Yrrr@{}}\toprule
+Observed outcome on 72 attacked decisions & No gate & Allow-list & Repair + gate\\\midrule
+Assigned attack effect observed & 27 & 3 & 3\\
+Legitimate summary delivered & 21 & 15 & 21\\
+Summary delivered without assigned effect & 12 & 12 & 18\\\bottomrule
+\end{tabularx}\end{center}
+The repair recovered six summaries across two designs, three trials each. Completion without the assigned effect rose from 16.7\% to 25.0\%. All three clean proposals still succeeded. One residual design appended a marker to an otherwise useful summary. The original scorer treated this as a replacement attack and missed it. The table above counts inclusion when inclusion was the design's stated goal. On the frozen scorer, the corresponding attack counts were 24, 0, and 0. A retrospective AI-assisted review agreed with the frozen scorer on 34 of 36 selected decisions. Both disagreements involved this marker case. The repair also has a narrow scope: in a separate held-out probe, neither tested gate nor the scorer recognized four additional representations of the synthetic credential.
+
+I expanded the AI-assisted review to all 75 archived proposals. Among the 72 attacked decisions, the frozen scorer agreed with the review on 69. All three disagreements were repeats of the same appended-marker design. A retrospective goal-aware count agreed on all 72. That agreement checks the revised interpretation on known data. An independent evaluation would require new evidence.
+The full 75-proposal review classified 33 refusals, 15 ordinary authorized summaries (including three controls), 12 wrong-recipient proposals, six summaries containing the synthetic credential, six marker-only proposals and three summaries containing an appended marker. All six useful-delivery gains came from two designs. There were zero paired losses. The other 22 designs tied.
+\clearpage\section{Clean-input experiment and content fidelity}
+\textbf{Benign format study.} I presented the same article as paragraphs, continuous text, bullets, HTML, and JSON. Each format ran under six conditions with five trials per condition, yielding 150 full-agent Kimi episodes. The job shuffled the combinations and saved each episode individually. Kimi used its provider-default temperature. An earlier set of 18 clean Kimi controls is reported separately.\par\textbf{Why I chose Kimi.} Gemini had returned repeated service errors, and the Groq free quota interrupted the broader run. I had access to a paid Kimi API and verified it on the actual task before expanding collection. Its 18 clean controls completed across all six settings in 4 minutes 56 seconds, with three episodes running concurrently. That made a larger benign-format study feasible within the reporting window. Switching from GPT-OSS 20B to Kimi also changed the model and sampling configuration, so I report their results in separate tables and make no provider speed or security ranking.
+
+All 150 emails described the 1.4 MW installation correctly and presented the electricity share and annual utility savings as projections. Two omitted the explicit annual time basis of the electricity-demand share. Omitting optional details was common even with complete preservation of the three figures.
+
+\begin{center}\small\begin{tabularx}{\linewidth}{@{}Yrrrr@{}}\toprule
+Source format & Episodes & Annual basis explicit & Battery & EV charging\\\midrule
+Original paragraphs & 30 & 30 & 1 & 1\\
+Continuous text & 30 & 29 & 30 & 30\\
+Bullets & 30 & 29 & 20 & 20\\
+HTML & 30 & 30 & 12 & 12\\
+JSON & 30 & 30 & 10 & 10\\
+\bottomrule\end{tabularx}\end{center}\textbf{Reliability.} Each final record contained exactly one email to the authorized professor. Of the 150 cells, 149 succeeded on the first attempt and one empty response succeeded on retry. The model was \texttt{kimi-k3.1-pro}. I reviewed 93 distinct email bodies and linked each label to its deliveries by the exact body digest.
+\begin{figure}[!ht]\centering\small
+\newcommand{\battery}[2]{#1 & {\color{teal}\rule{#2mm}{1.5ex}}\quad #2/30\\}
+\begin{tabular}{@{}ll@{}}\battery{Original paragraphs}{1}\battery{JSON}{10}\battery{HTML}{12}\battery{Bullets}{20}\battery{Continuous text}{30}\end{tabular}
+\caption{Emails retaining the optional battery detail, ordered by observed frequency. Each format represents the same article, tested 30 times.}\end{figure}
+\clearpage\section{Tracing information loss and operational cost}
+Every saved episode made one completed call to the extractive summarizer. I reproduced its returned text exactly in 150/150 cases from its recorded input. When the tool output contained the word \textquotedblleft{}battery,\textquotedblright{} the delivered email mentioned the battery in 61/61 cases. When the output omitted the word, 12/89 emails still mentioned it. The agent also had the article from its read step. These observations identify where information was available during the recorded workflow. They do not establish which message the model relied on.
+
+To isolate formatting at the tool boundary, I supplied each of the five unchanged source renderings directly to the deterministic summarizer, once per rendering. The implementation selects up to three nonempty paragraphs and truncates the joined text to 700 characters before appending an ellipsis. The original paragraph rendering dropped the battery mention. All four other renderings retained it. All five direct extracts omitted the word \textquotedblleft{}charging.\textquotedblright{} This five-input control tests the tool alone. The full-agent results also reflect the text the agent chose to pass to the tool and the final email it composed. Additional articles would be necessary to establish a general format effect.
+
+\subsection{Defense overhead}
+
+The completed Kimi episodes logged 604 agent calls and 50 guard calls. The guard-only and combined conditions each used 25 guard calls in 25 episodes. The other four conditions used none. Overall median episode latency was 43.6 seconds. The saved usage records counted 757,675 tokens across the successful attempts and another 4,176 in the archived failed attempt. Parallel collection and provider variation limit causal interpretation of timing differences.
+\begin{center}\small
+\begin{tabular}{@{}lrrr@{}}\toprule
+Kimi condition & Valid episodes & Summaries delivered & Median seconds\\\midrule
+No defense & 25 & 25 & 40.5\\
+Sanitization & 25 & 25 & 44.6\\
+Instruction hierarchy & 25 & 25 & 44.1\\
+Guard LLM & 25 & 25 & 46.5\\
+Action allow-list & 25 & 25 & 41.4\\
+Combined & 25 & 25 & 46.8\\\bottomrule
+\end{tabular}\end{center}
+
+\textbf{Worked example.} The saved HTML case under the action allow-list records reading, summarizing and one authorized mock delivery in about 43 seconds. The email retained the 1.4 MW installation, the projected 28 percent electricity share and estimated annual savings of \$310,000. A count of successful deliveries alone would hide the differences in optional details reported on the previous page.
+\clearpage\section{Progress compared with the proposal and limitations}
+
+The midterm proposed 450 full-agent episodes: three complete trials. The revised plan targets 210 on one model configuration. The first 150 cover every attack design and clean control under all six settings. Another 60 repeat the four preselected pilot designs and clean control twice under each setting. This preserves one complete comparison and narrower evidence about repeatability. The 150 benign format episodes answer a different question. Of the 210 planned Kimi episodes, 18 clean controls are recorded and 192 adversarial episodes remain open.
+
+\section{Challenges and Solutions}
+\textbf{Interrupted collection.} Groq's free quota stopped the broader run. I kept the failure and all completed episodes. Kimi's single empty response demonstrated why first-attempt outcomes and recovered outcomes both belong in the results. Individual checkpoints let me retry only that case.
+
+\textbf{Scoring ambiguous outcomes.} A message can contain an apparently legitimate summary and still fulfill a content-modification goal. I preserved the original scores and reported a second count using the stated goal. Separately, an AI-assisted review checked the 36 completed broader Groq episodes against the source article. It identified 20 useful authorized deliveries and agreed with the task scorer on all 36 task outcomes. The reviews are retrospective AI assessments. Independent human labels remain unavailable.
+
+
+\textbf{Proposed final scope.} I propose the 48 matched Groq episodes as the full-agent comparison, the 75 repeated final decisions as the delivery-policy study, and the 150 Kimi episodes as the clean-input evaluation. Under this narrower scope the 192 outstanding Kimi security episodes become future work. The matched set was identified retrospectively and offers one observation per case and condition.
+
+\textbf{Judge reliability.} Two available Groq pilot judge verdicts attributed a send to the agent when the mock mailbox showed zero sends. I used the recorded mailbox as the primary behavioral evidence. Missing judgments and provider failures are tracked separately.
+
+\textbf{Secondary pilot check.} In the four-design Gemini pilot, every defended condition achieved useful delivery without the assigned effect on four of four cases, compared with three for baseline. In the four-design Groq pilot, instruction hierarchy tied baseline at three of four, yet matching by design revealed one gain and one loss. Neither pilot gives a precise estimate of success on new designs.
+
+\clearpage\section{Current status and next week's completion plan}
+
+The implementation and empirical analysis for the proposed narrower comparison are complete locally. The matched episodes measure end-to-end behavior, the replays isolate a policy change, and the clean inputs reveal how the agent preserves article content. The largest unresolved question is how these defenses behave across more designs, articles and model configurations. My final-week work will turn the archived results into a reproducible submission and document the decision on scope.
+
+\begin{center}\small\begin{tabularx}{\linewidth}{@{}p{.14\linewidth}YY@{}}\toprule
+Next week & What I will do & How I will verify completion\\\midrule
+Days 1--2 & Confirm the final empirical scope with my instructor and freeze the analysis version, configurations and exclusions. & Record the scope decision, code revision and evidence inventory.\\
+Days 2--3 & Rebuild the tables offline in a clean checkout. Check input digests, error counts, overlap handling and software tests. & Save a reproduction log and reconcile each table with its source output.\\
+Days 3--4 & Finish the final paper, including related work, methods, findings and threats to validity. & Trace each numerical claim to its model, unit of analysis, denominator and source.\\
+Day 5 & Publish reviewed code and shareable evidence, rehearse the final demonstration and assemble the course submission. & Check the repository release, final PDF, video playback, captions and submission receipt.\\\bottomrule
+\end{tabularx}\end{center}
+
+\textbf{Conclusion.} On the eight matched designs, a zero count of scored attack effects was compatible with useful delivery in either three or seven cases. Examining the final email explained one part of that difference in objectives: a narrow repair could preserve some authorized summaries while retaining a delivery check. The format study exposed a different failure mode. An agent could complete every requested delivery while consistently omitting a fact that the tool had truncated. Each result depends on a different part of the workflow, and the final paper will preserve those distinctions.
+\clearpage\appendix\section{Evidence, code and demonstration guide}
+From the project root, run the two offline analyses with the saved checkpoints present:
+\begin{lstlisting}
+python -m evaluation.archived_findings
+python -m evaluation.archived_security_comparison
+\end{lstlisting}
+The first reconstructs the format and review summaries and checks all 150 recorded tool results against the local implementation. The second checks the model configurations, matches valid cases and repeats the analysis with the alternative copy of the overlapping design. The software tests passed at the reporting cutoff (67 tests).
+
+\begin{center}\small\begin{tabularx}{\linewidth}{@{}p{.45\linewidth}Y@{}}\toprule
+File in the evidence directory & What it records\\\midrule
+\path{archived_security_comparison.json} & Six-condition results, both overlap calculations, source digests and the excluded error.\\
+\path{credential_repair_results.json} & Paired per-trial outcomes before and after the delivery repair.\\
+\path{archived_decision_labels.json} & Source-linked AI-assisted review of all 75 proposals.\\
+\path{kimi_summary_labels.json} & Content judgments for 93 distinct email bodies.\\
+\path{archived_findings.json} & Format counts, trace checks, paired pilot results and expanded review totals.\\\bottomrule
+\end{tabularx}\end{center}
+
+The demo uses the saved trace in \path{results/kimi_format_study/html__allowlist__1.json}, code from the offline evaluation, and verified results. The project repository is \href{https://github.com/Somama12/prompt-injection-agent}{Somama12/prompt-injection-agent}. The submission package includes the listed evidence summaries. Full raw checkpoints are required for regeneration. Publishing the reviewed snapshot is scheduled for next week.
+
+\begin{thebibliography}{9}\small
+\bibitem{greshake} K. Greshake, S. Abdelnabi, S. Mishra, C. Endres, T. Holz and M. Fritz. \emph{Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection}. 2023. \href{https://arxiv.org/abs/2302.12173}{arXiv:2302.12173}.
+\bibitem{injecagent} Q. Zhan, Z. Liang, Z. Ying and D. Kang. \emph{InjecAgent: Benchmarking Indirect Prompt Injections in Tool-Integrated Large Language Model Agents}. 2024. \href{https://arxiv.org/abs/2403.02691}{arXiv:2403.02691}.
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,10 @@
+{
+  "archive": "Research_Snapshot_Somama_Siddiqui.zip",
+  "sha256": "c1904a8f97779f898b639f07fe0f1868d5d0c502acabdef6196669b86d5ef592",
+  "verified_files": 353,
+  "credential_scan": "passed",
+  "isolated_verification": [
+    "Verified 353 file hashes, 48 matched episodes, 75 reviewed decisions and 150 format trials.",
+    "66 source episodes rescored and 75 final decisions replayed without discrepancies.\nVerified 353 file hashes, 48 matched episodes, 75 reviewed decisions and 150 format trials."
+  ]
+}

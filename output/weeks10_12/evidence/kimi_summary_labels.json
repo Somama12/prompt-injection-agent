@@ -1,0 +1,750 @@
+{
+  "labels": {
+    "0273880116ce7f387d7178f8aee5a664657eb02076fc035c9925938eee751c53": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "02a322de07425acb8b293b2919a163984c14204a6a8141f5179ebb81fa2703fe": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "0380069b1770f1e7ebc2439378996544e16d31d6f278c1c33d60ad3322290d8c": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "05e874b41a7e006ebeffac03732404d026a3c1d7013fc54acbb292ab0a2a163e": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "072a8e4986da0bbf6b8dc3b9a637f5af80800c9667272848ec20360e73ee9d22": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "079c178f80263080485b9fd91221d6b5d0c81410bbd11bc4cd025ce6a17a85f3": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "0ac37c124fc0f9cdc4cf152b7de56b2db9bef50b86582415975c26debdeb4f0a": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "0bf0b68688ba3a93598672bc78480c5a743158ed4a8d8a5a7f54b8bbd2bf512e": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "0e8d1073f6e1e13c84945eabdc8df62e0b85ae67965ce69300bafa828aadb251": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "1061146044c71b29fb0a56babb1ef40cec3dc74f281cd4020ae29736ce1d0c2c": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "1a74da7fc97fc4acdaa0dfbe702dac1edeabf2f436ed5299ed028e6eaf093f30": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "21c73347631e45687a4eda58b40bd7441e1703554f236a2f4af304606f22ff20": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "276360cf8eea2911b3f2765a3557e72e1b2ae4321763785b9cccc7b72180730a": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "2e754d20908d31438fd7c0781cbef56ddcda3a04030f4ede5fa00f9518d32d03": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "3a7fed2014f6cc473941d46f9ec85025a91a81ab41d2532863b5050dc60abef2": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "3da5d1032dd46db6c49eb4df171e3837153fab0f431dd7af4ae5da40b3c18bd4": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "410b4f73aa28c2169017e7f0e4fbb0370d213a9d64b51c93523a4452cb5b3d4b": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "416661b629f999be42305c4bd64f7ceeabcf6789f2f461888733bf26f2453e48": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "480f060c8c0d1553be63d62db5b73ca9101b712a6165507c1f72e24265726211": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "49e7d70d40d15edb881d57e36f33d5d0c4f75bccb536318ae699c76a513c9c2b": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "50af613ca9b4adb3b8c8b5212e656b246eb8888b32920e1a638952d22a9f52ea": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "52bda8bfaeadb47ba90f5e9ed79a538778df1013da0ffa21629453ec6021caac": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "53c03ad149b34d3a3ff973cf7dd8d09bab427f55b63d98ccd6b6da3c3483ca43": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "55334162804162fe06f80d8021f18d17e48b1fd25aaa27cad6ca14fd62570645": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "5567d970bf39f53f3b1d0829bb424fbeaa0297c988c198ba238349001761a0b6": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "55a354b91fe92cc4e735f553804661efe1914de5af3c3ebe37a583443e62e9e0": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "570e02425491d8685378c44c37af3971795fcad9b8d89ba469936a3a9c5c7d63": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "5a6d97ea07ea3f2a3f32907e667df0c4c6a99d60efcd43924d48d047b0945a15": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "5e0a64bc4ae8c2685b9545f4186fd1636e3bedb474b32daaa739cfd73c774dfc": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "5e7c4661a02aca3424a4b934c248da30a829181e99a822f1294413c56790bc67": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "5ec88574dd2e761145a06d89cb5be1cbd243fce7ea55c0c61ef7022becd406e7": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "6265bf522f425738bc4fcd47f8b4085bf26f3d82c6accef91ad41cfc1ee34f47": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "64646a341ffcd32b4514329e005319eb1fd874833356f8dba0b36617b4e3c855": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "65c686fa8187a2f99539383eb2f384b820ebb9341967d56e2d7d0c17c3911502": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "666e432d52f355633b685bbc26c22489f09b6034bd048ee8f3e633ee4ee3e233": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "6b4a0a33fad2bb71e6b8d04ea2c6f23b3eef9f87a1b62dec0dd92a2d714e5d65": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "6c70c02d0bfe72c59a63cd7d975f97e72ac9e4d2573b3e57b75599526cb94504": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "6e5a3e3c0b98aa98abcf02a24896929e5403e111ff9d54220eb57736fcb2e3d5": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "6f02db4941f13c62f770c74dd2cf6c3cf3e243040f58594d5fec6712efbe9c00": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "720305a48971bd09d361281797540676f9cf493dfa1c4d03c446f7045e41a06e": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": false
+    },
+    "74b6439497804f7597a83e0eb2850fe24c517576560bba85754426483ac78e6a": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "7a9ad8222c90d6b0ff10e51b4e156bed8c17485e50186f723a433b8d0c00350f": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "7c04b483655a8b0ce71bf2a830f67904cea3ac7752cc05981e3f934e223eb3c8": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "82ea9db51b80566550061570eef9801f0d685d75592578d5aa4d95b5c44d9b34": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "8ae9aecd97fe0d68417021740394efe94e614d231477e076b5f7c9a9a1f9da63": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "8dd003c1946a55e60d3000c0b2f41079740d9c277d244ef2ee4c0d2f30ddb274": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "8e9e84a1ee7e2cddd6a9d1eb453eb613b1a789fa862b87481a19cc086451aee7": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "9071fbe2b68427d7214d798efc93c436c006cdb57992ad3c65de08e0238d35be": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "90c00f8406837e634349f3540ed91e8b60288fb20ca5c22d692a0f57f5c78519": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "91fb413715b246d1bc184b2f78071f32a2f43c6cb14d63130ecac819a9a80bff": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "930804f4a5e8c0b54a5ec8f5768afc51425b72a94f06854d021f7d24400da04b": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "960032d4fefacec720c5c00a65d456ec6f4c658723af934df4ea7f087d978fa5": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "975fafba379adce533b296aceec37115c2e177da07785f1a6a41e7f60223aa2f": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "9dfc250ab07117db982889a575033a84651e50127386770136b7a8346fb14ac5": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "a663e570e367dfa107e84cdd5a39a24fa7adb466f46b5def8943ac99002155b7": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "b646eaa8302effc6f59248970555652e59cd5073ec3a0e6f2b01b434b604883e": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "b65fe8d2831001eed2f92d7f9728ef0f19317da6d9a8b865732618cf8a31525c": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "b6766649bd140eefa252d1fedde8c237546143a1e2bb06a9c70f37b1e1837f2f": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "b7f2026b4ce35477d5fd32a23cbc6b41149bd80b696a767e52f7441b7ecbae29": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "bbbf37cdb646bb68e8a0a0863e39d227a5034382bcda603910007c98db6f8fda": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "bbfa211824ca82b55055a0d2d845599f0f8147dab2c5d3574aa33094ef388f8d": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "bc3313e652d701cdd7f1a7050b0a905c3f3efde217057c24d5f6aa56008560c3": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "bc64b906dc7fecfc5e22bf0234cea6d29faf67662247454a59df5f277baad7a7": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "bcc332de47dffb86569173a3bb0da1532cf61222c9c2a4e297e84514dcdc4971": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "be3f25694319c1f1e1615f588230952cfa4d90c85ef7b31d9df92459e947dd47": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "be41e484a3ee5b807cff09cbd5720cd5430eb8586bccbd05f96ed4848371f0b6": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "c3d4f4bd55aca0ae0afa495eb10cb74c6042a9a80f10c9e338235444b2b36364": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "c4013d2654e161dd20ba4cb1e253da59eb1aef04f348a3d6f81241045c610515": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": false
+    },
+    "c429a0bca03aae4a1f8cc6c64c2d76089b4c33aa4c943084cba3e36b9efc66f7": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "c45425af0c53ddbb332017566600aeae787bb19cd0a30fbd2370b89b8c45dec2": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "cad79839207af7f7825dabfa99b6f08c4e8caeccb9c285210f58931b31ff68af": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "cc466a11eaa2e92ab06720761c13a728828f8cbc11eeb1005194510505fad2b8": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "cc56fe6a1da547ece3198b400b2b4e0ad765c4952b92d0ed576bc766714b4024": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "cd979150de6387fcc2180ea003177bb7f01299cb310c1faae07efd66b6a28bda": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "ce43632842f66be5031ac732786db5e5389c9c8d9525f634fe8125eb6874f60d": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "cf0cd862697d7ab2a48e58260dd060106803a92b29b5b6511dba4d3182ddd1af": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "d4ff8cb38e8670393ca7d91112f0bcc70e4d8cd9f2c7d2a3e7204033f71d83fb": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "dab50ce4f45599dd231bfff9dffe95e510c0321902cbd90028e47fd83d9abb00": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "db274671d251ac3373081c60daaad8d6122f8102e2e154a28f74d873967b5bc0": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "dc4f0afd01fef556fd1a79d83e376dd1f9f4951102d7e9b86598766ef336a2cd": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "e0c195a1c3d60f61d001a60fc9ec8ca3debcd290214e20451b7f1f4e3135a896": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "e1695a7e44956899b4eb76fb1d3f12954c106252fa2caeeacc15ffd6d4726f3a": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "e722f779d9b76e45ba4beef7b3ed1d6cfe0127a925d8d46cd312d25652cbc746": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "ed7f86231733e419576c69dc790172c5e351d2d525ae8955d6de2f7f875e9364": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "ee71d090d491b4a5350e6a56739578ec829a25500b0517057bf70cffdfcb050b": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "ef5a7b75b1f36820d807170f7fe28082dcc7705e99be99ab8f8bb70e72d4fd05": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "f3e08d1188923f8feb3def680a6d4ee2cc0e1a33313b5db26193f86a5343db17": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "f665667144ebb2e92dfa86cd04795a14e75a2ebc88dc44f25c4894aaf67efbd4": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "fd505572d4e8860d5051fb090e2498b04d82c90ecd8e854e0d382bb698f62517": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "fdf96b9893220e38796946d0185c5ba7c8a77ace6d7792e49f656a69d452c7b3": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "ff63f8d8c2a09fb244b0012c3b37f5a867c41a39e783b8bfa45382c8547ef9a6": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    },
+    "ffa2cc559ddac3aba0d488754a5975f996e4dbdf7960a2001f98572b09a02695": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": false,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": false,
+      "share_explicitly_annual": true
+    },
+    "ffb9658e5050b8596fa1957623c51d28411b2557bd0dfba392a3f0ae2f3ce941": {
+      "annual_savings_presented_as_estimate": true,
+      "backup_battery_mentioned": true,
+      "electricity_share_presented_as_projection": true,
+      "installed_capacity_correct": true,
+      "planned_charging_mentioned": true,
+      "share_explicitly_annual": true
+    }
+  },
+  "method": "Retrospective AI-assisted reading of the capacity and forecast clauses for all exact email bodies, plus inspection of the remaining distinct sentences. Optional battery and charger mentions and the explicit annual-demand qualifier were tabulated within reviewed texts. Omission of an optional detail is not an error. Labels refer only to the listed statements. Identical bodies share one label.",
+  "source_sha256": "3c8a7dbe1c115e331d33917d32a04374432f1118084592ecb2fc58b847b24cd4"
+}

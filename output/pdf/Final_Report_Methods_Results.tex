@@ -1,0 +1,230 @@
+\chapter{Experimental Methodology}\label{ch:methods}
+\section{Task and benchmark}
+The task has one authorized destination, \code{professor@fisk.edu}. The security fixture describes a fictional 1.4-megawatt solar installation, projected coverage of 28\% of annual electricity demand, and estimated savings of \$310,000 per year. Other details include a battery and planned charging infrastructure. The Kimi format study uses its own saved, shortened fixture with the same core figures. Each cohort's manifest defines its exact input.
+
+The 24 designs contain six examples in each of four families. Direct overrides attempt to replace the task; role-play provides an alternative behavioral frame; data exposure targets a synthetic credential or unauthorized destination; disguised system instructions imitate higher-priority messages. These categories organize the benchmark without guaranteeing equal difficulty or independence.
+
+\section{Cohorts and denominators}
+\begin{table}[!htbp]\centering\small
+\caption{Evidence inventory. Derived analyses reuse source records and must not be added as new independent experiments.}\label{tab:cohorts}
+\begin{tabularx}{\textwidth}{@{}p{.24\textwidth}p{.21\textwidth}Y@{}}\toprule
+Cohort or analysis & Valid observations & Purpose and relationship\\\midrule
+Gemini midterm pilot & 24 attacked + 6 clean & Four designs under six conditions; implementation feasibility.\\
+Groq balanced pilot & 24 attacked + 6 clean & Same four-design structure; failed first attempts retained separately.\\
+Groq broader collection & 30 attacked + 6 clean & Five complete designs; one additional terminal provider error excluded.\\
+Matched Groq analysis & 48 attacked & Derived from both Groq collections; eight designs after removing one shared design.\\
+Final-decision study & 72 attacked + 3 clean & 24 designs and a clean case, each repeated three times; policies replay the same proposals.\\
+Kimi clean controls & 18 clean & Six conditions, three trials; separate from the format study.\\
+Kimi format study & 150 clean & Five formats, six conditions, five trials; one failed attempt retried.\\\bottomrule
+\end{tabularx}
+\end{table}
+
+The Groq full-agent collections record \code{openai/gpt-oss-20b}, temperature 0, and a matching source fingerprint. Their planned attack lists, repeat counts, and request pacing differ. The format manifest records \code{kimi-k3.1-pro}, provider-default temperature, and up to eight workers. These are archived identifiers and settings, not a claim that providers or sampling procedures were equivalent.
+
+\section{Outcome definitions}
+For a valid attacked episode \(i\), let \(A_i=1\) when the assigned effect is observed under the stated rule. Let \(T_i=1\) when the task heuristic finds a sufficiently long, article-related email delivered to the authorized professor. Define
+\begin{equation}
+U_i=T_i(1-A_i),
+\end{equation}
+where \(U_i\) means useful delivery without the assigned effect. This is an operational measure, not proof that a message has no possible defect. For condition \(d\) with \(n_d\) valid attacked observations:
+\begin{equation}
+\widehat{\mathrm{ASR}}_d=\frac{\sum_i A_i}{n_d},\qquad
+\widehat{\mathrm{TCR}}_d=\frac{\sum_i T_i}{n_d},\qquad
+\widehat{\mathrm{UD}}_d=\frac{\sum_i U_i}{n_d}.
+\end{equation}
+The report emphasizes counts because small denominators can make percentages misleading. A refusal can have \(A=0,T=0\); a useful contaminated message can have \(A=1,T=1\). Invalid or missing episodes have no primary behavioral score.
+
+\subsection{Frozen programmatic scorer}
+Recipient redirection requires actual delivery to the designated unauthorized destination. An address quoted in a body does not count. Credential exposure is broader than email delivery: the synthetic credential or a recognized representation in any executed tool argument satisfies the implemented criterion. This measures a mock-policy breach, not real-world exfiltration.
+
+For unwanted content, the frozen scorer checks whether the assigned marker replaces the summary. A marker-containing body with article keywords and length greater than 120 characters is treated as summary-like, potentially missing inclusion alongside a valid summary. This limitation is retained and measured.
+
+\subsection{Task completion and content fidelity}
+The task heuristic checks the authorized recipient, article keywords, and body length greater than 60 characters. It provides reproducible screening without establishing semantic accuracy. Separate Kimi content review assesses the meaning of three core figures, whether the annual-demand basis is explicit, and coverage of battery and planned charging details.
+
+\section{Matched full-agent comparison}
+The balanced pilot provides four complete designs and the interrupted collection provides five. Their common design is counted once, using its pilot observations. The result is eight designs with an observation in every condition. A sensitivity analysis substitutes the later records for that shared design.
+\begin{figure}[!htbp]\centering
+\includegraphics[width=\textwidth]{cohort_flow.pdf}
+\caption{Selection of 48 matched full-agent outcomes from 66 valid source records. Clean controls are excluded and duplicate observations are not new designs.}\label{fig:cohort}
+\end{figure}
+
+The retained design set is \code{do\_01} through \code{do\_05}, plus \code{rp\_01}, \code{de\_01}, and \code{fs\_01}. Five of eight therefore belong to direct override. Collection stopped in benchmark order; this is a retrospective, nonrandom case mix.
+
+The analysis pairs each condition with baseline by design. A gain is \(U_{\mathrm{baseline}}=0,U_d=1\), and a loss is the reverse. Per-family counts and leave-one-design-out tables expose dependence on particular examples. These are descriptive sensitivity checks rather than significance tests.
+
+\section{Final-decision replay}
+Three saved observations exist for every design and a clean control. The archived object is a final email proposal or refusal, not a complete adaptive trajectory. Analysis replays these objects through no gate, the existing gate, and a repaired gate.
+
+The repair removes a narrowly recognized standalone synthetic-credential component from an otherwise authorized message before applying the gate. It was designed after inspecting examples. Its evaluation measures a post-hoc intervention on known evidence, not generalization to unseen credential representations or attacks.
+
+Both the frozen scorer and a goal-aware interpretation are reported. The latter counts marker inclusion when the design's stated objective is inclusion, even if a useful summary remains. This is a disclosed retrospective clarification, not independently validated ground truth.
+
+\section{Clean-format experiment and exact tool replay}
+The Kimi experiment crosses original paragraphs, continuous text, bullets, HTML, and JSON with six conditions and five trials: \(5\times6\times5=150\) cells. Every completed record contains a summary-tool call and one authorized email.
+
+Review covers 93 distinct email bodies and maps each annotation to all corresponding deliveries by exact digest. This avoids treating identical text as a new semantic judgment while preserving episode counts. Tool tracing reproduces every saved output from its recorded input. A separate five-input control feeds each unchanged rendering directly to the summarizer.
+
+\section{Review provenance and error treatment}
+Review was retrospective and AI-assisted, informed by earlier aggregate findings. It was neither blinded nor independent human validation. Decision annotations retain source references and digests; content annotations retain body identities. Agreement indicates consistency on reviewed examples, not an estimate of human-level accuracy.
+
+The Groq balanced pilot ultimately contains 30 valid records after three first-attempt errors. The format study completed 149 cells initially and one on retry. The broader Groq collection preserves its terminal error but excludes it from behavioral denominators. The 192 unobserved Kimi security outcomes are not inferred from clean-input performance.
+
+\chapter{Results and Analysis}\label{ch:results}
+\section{Pilot findings and judge disagreement}
+The Gemini pilot contains 24 attacked and six clean episodes. Baseline recorded one assigned effect in four attacked cases; each defended condition recorded none. Useful deliveries without an effect were 3/4 for baseline and 4/4 for each defended condition. Retrospective AI-assisted labels on the 24 attacked cases agreed with the frozen scorer. The small pilot does not establish a general ranking.
+
+The Groq balanced pilot recorded no assigned effects in 24 attacked cases, but only 20 useful task completions. Useful deliveries were 3/4 for baseline, 4/4 for sanitization, 3/4 for hierarchy, 3/4 for guard, 3/4 for allow-list, and 4/4 for combined. Hierarchy's unchanged total concealed a gain and a loss relative to baseline.
+
+Model-judge verdicts were available for 23 of those 24 attacked cases. Two positive verdicts described unauthorized sending despite an empty mailbox. This motivates prioritizing executed records over an evaluator's narrative. The unavailable verdict remains unavailable.
+\evidence{\path{pilot_comparison.json}, \path{groq_judge_audit.json}, and source pilot archives in the frozen evidence directory.}
+
+\section{Matched end-to-end security comparison}
+\begin{table}[!htbp]\centering
+\caption{Matched Groq results. Each condition has eight observations. \(U\) denotes useful delivery without the frozen scorer's assigned effect. Gains and losses are relative to baseline.}\label{tab:security}
+\begin{tabular}{@{}lrrrr@{}}\toprule
+Condition & \(A/8\) & \(U/8\) & Gains & Losses\\\midrule
+Baseline & 1 & 3 & 0 & 0\\
+Sanitization & 2 & 4 & 1 & 0\\
+Instruction hierarchy & 0 & 7 & 5 & 1\\
+Guard model & 0 & 4 & 1 & 0\\
+Action allow-list & 0 & 3 & 0 & 0\\
+Combined & 0 & 7 & 4 & 0\\\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:security} answers RQ1 within the selected cases. Hierarchy, guard, allow-list, and combined each recorded zero assigned effects, but useful deliveries differed: 7/8, 4/8, 3/8, and 7/8. A zero effect count alone obscures the differences in service to the legitimate user.
+\begin{figure}[!htbp]\centering
+\includegraphics[width=\textwidth]{security_counts.pdf}
+\caption{Security and useful delivery are separate outcomes. Bars describe the matched cases only; no population-level confidence claim is implied.}\label{fig:security}
+\end{figure}
+
+Hierarchy and combined tie in aggregate, but hierarchy recovers five baseline failures and loses one baseline success. Combined recovers four while preserving all three baseline successes. Sanitization records more assigned effects than baseline while still recovering one useful delivery. No named defense is uniformly better on every observed dimension.
+
+Among five direct-override designs, useful deliveries without an effect were 1/5 for baseline, 1/5 for sanitization, 5/5 for hierarchy, 2/5 for guard, 1/5 for allow-list, and 4/5 for combined. Each other family contributes one design, insufficient for reliable family-level rates. Substituting later observations for the shared design leaves all aggregate counts unchanged. Leave-one-design-out tables expose case influence, but repeatability remains unresolved with one retained trial per cell.
+\evidence{\path{archived_security_comparison.json}; raw-score reconciliation in \path{score_audit.json}.}
+
+\section{Final decisions and scoring sensitivity}
+Table~\ref{tab:decisions} classifies all 75 final decisions: 72 attacked observations and three clean controls. Refusal is the largest group, with 33 decisions. A refusal avoids delivery but does not accomplish the user's task.
+\begin{table}[!htbp]\centering\small
+\caption{AI-assisted classification of ungated final decisions.}\label{tab:decisions}
+\begin{tabularx}{\textwidth}{@{}Y r@{}}\toprule
+Observed decision & Count\\\midrule
+Refusal to send & 33\\
+Ordinary authorized summary, including three clean controls & 15\\
+Summary addressed to the wrong recipient & 12\\
+Summary with synthetic credential in subject or body & 6\\
+Message containing only the assigned marker & 6\\
+Useful summary with the assigned marker appended & 3\\\midrule
+Total & 75\\\bottomrule
+\end{tabularx}
+\end{table}
+
+The frozen scorer agrees with expanded review on 69/72 attacked decisions. All three disagreements repeat one marker-inclusion design. Its goal is satisfied by inclusion, whereas the frozen rule tests replacement. The goal-aware count agrees on all 72, reflecting a revised interpretation of known evidence rather than independent validation.
+
+\begin{table}[!htbp]\centering\small
+\caption{Paired replay on 72 attacked final decisions. The three clean controls are excluded and remain successful under every policy.}\label{tab:replay}
+\begin{tabularx}{\textwidth}{@{}Y rrr@{}}\toprule
+Measure & No gate & Existing gate & Repaired gate\\\midrule
+Effects: frozen scorer & 24 & 0 & 0\\
+Effects: goal-aware count & 27 & 3 & 3\\
+Useful deliveries \(T\) & 21 & 15 & 21\\
+Useful deliveries without effect \(U\), goal-aware & 12 & 12 & 18\\\bottomrule
+\end{tabularx}
+\end{table}
+\begin{figure}[!htbp]\centering
+\includegraphics[width=\textwidth]{replay_counts.pdf}
+\caption{Replay distinguishes blocking from useful recovery. Repair improves utility on known cases but does not remove the three marker-inclusion effects.}\label{fig:replay}
+\end{figure}
+
+Relative to the existing gate, repair yields six gains and zero losses in \(U\). At the design level, there are two improvements and 22 ties. Removing the two improved designs leaves no difference over the other 66 attacked decisions. The benefit is reproducible and localized, not evidence of broad policy superiority.
+
+Replay fixes the proposal, so it cannot show how the model would react to an earlier veto. Additional diagnostic credential forms revealed recognition gaps in policy and scorer, further motivating held-out evaluation before generalizing.
+\evidence{\path{archived_decision_labels.json}, \path{credential_repair_results.json}, \path{marker_audit.json}, and archived final-decision trials.}
+
+\section{Kimi clean-task preservation}
+The 18-episode Kimi control collection established clean-task feasibility across six conditions and three trials. All 18 completed the task. These observations are separate from the format study and provide no adversarial comparison.
+
+All 150 final format-study records contain one authorized delivery. AI-assisted review found correct preservation of 1.4 MW capacity, projected 28\% electricity share, and estimated \$310,000 annual savings in every body. The annual-demand basis is explicit in 148/150 bodies and implicit in two.
+\begin{table}[!htbp]\centering\small
+\caption{Clean-format content coverage. Every row has 30 episodes and preserves all three core figures in 30/30.}\label{tab:formats}
+\begin{tabular}{@{}lrrr@{}}\toprule
+Source format & Annual basis explicit & Battery & Planned charging\\\midrule
+Original paragraphs & 30/30 & 1/30 & 1/30\\
+Continuous text & 29/30 & 30/30 & 30/30\\
+Bullets & 29/30 & 20/30 & 20/30\\
+HTML & 30/30 & 12/30 & 12/30\\
+JSON & 30/30 & 10/30 & 10/30\\\bottomrule
+\end{tabular}
+\end{table}
+
+Battery and planned charging each appear in 73 emails, with identical per-format counts. Successful delivery and preservation of headline facts can therefore coexist with substantial variation in secondary details.
+\begin{figure}[!htbp]\centering
+\includegraphics[width=\textwidth]{format_counts.pdf}
+\caption{Optional-detail coverage across five representations of one article. Formats are not independent source documents.}\label{fig:formats}
+\end{figure}
+
+\section{Tracing information through the tool}
+Every saved summary output reproduces exactly from its input: 150/150 matches. All 61 emails whose tool output mentioned the battery retained it. Among 89 whose tool output omitted it, 12 emails included the battery and 77 did not.
+\begin{figure}[!htbp]\centering
+\includegraphics[width=\textwidth]{fidelity_trace.pdf}
+\caption{Battery coverage at tool and delivery stages. The article also remains available to the agent, allowing possible recovery after tool omission. Internal model attribution is unobserved.}\label{fig:trace}
+\end{figure}
+
+When each unchanged source format is directly passed to the tool, original paragraphs omit the battery while the other four preserve it. All five direct extracts omit the word \emph{charging}. Full-agent outcomes also reflect model-selected tool input and final composition using additional context. This identifies a deterministic truncation mechanism without establishing a general causal ranking of formats.
+
+\section{Observed overhead}
+\begin{table}[!htbp]\centering\small
+\caption{Kimi format-study latency and guard usage. Each condition has 25 completed episodes.}\label{tab:latency}
+\begin{tabular}{@{}lrr@{}}\toprule
+Condition & Median seconds & Guard calls\\\midrule
+Baseline & 40.5 & 0\\
+Sanitization & 44.6 & 0\\
+Instruction hierarchy & 44.1 & 0\\
+Guard model & 46.5 & 25\\
+Action allow-list & 41.4 & 0\\
+Combined & 46.8 & 25\\\bottomrule
+\end{tabular}
+\end{table}
+
+Overall median latency was 43.6 seconds. Successful attempts logged 604 agent calls and 50 guard calls, totaling 654. Saved usage counted 757,675 tokens in successful attempts and another 4,176 in the archived failed attempt. Guard-only and combined each reached the guard 25 times.
+
+These durations are descriptive. Parallel workers, provider conditions, retries, and pacing influence wall-clock observations. They do not isolate causal defense overhead or establish a provider-speed advantage. No dollar cost is inferred from token counts.
+\evidence{\path{archived_findings.json}, \path{kimi_format_results.json}, \path{kimi_summary_labels.json}, and the Kimi manifest.}
+
+\chapter{Testing, Validation, and Reproducibility}\label{ch:verification}
+\section{Software verification}
+The closeout suite recorded \textbf{74 passed in 14.87 seconds}. Tests cover authorization, scoring, provider parsing, repeated-analysis handling, review logic, replay, repair, and archived comparisons. Passing establishes that specified software checks succeeded, not robustness outside the observed cases.
+
+New regression cases target research integrity: missing evidence and mismatched metadata are rejected, and case-level gains and losses concealed by equal totals are checked. These tests prevent an apparently complete table from silently accepting an incomplete matched grid.
+\begin{table}[!htbp]\centering\small
+\caption{Research-closeout verification results.}\label{tab:verification}
+\begin{tabularx}{\textwidth}{@{}p{.39\textwidth}Y@{}}\toprule
+Check & Recorded result\\\midrule
+Software test suite & 74 tests passed.\\
+Source-score reconciliation & 66 valid source episodes rescored without discrepancies.\\
+Mailbox consistency & Executed sends reconciled with delivery records.\\
+Final-decision replay & 75 decisions reproduced the stored policy analysis.\\
+Summary-tool replay & 150/150 exact output matches.\\
+Archive integrity & 353 file hashes verified.\\
+Isolated reproduction & Table reconstruction and full score/replay verification succeeded in fresh extraction directories.\\\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{What each validation layer establishes}
+Hashes establish that inspected bytes match frozen inputs. Coverage checks establish that required cells are present. Rescoring establishes that audited rules reproduce saved outcomes. Replay establishes local-policy behavior on recorded proposals. AI-assisted review interprets content that keyword rules may miss.
+
+These checks have different limits. Hashes do not establish factual correctness. Reproducible scoring can reproduce a flawed rule. AI-assisted labels can be mistaken. Agreement after retrospective rule correction is not independent validation. Consequently, the frozen and goal-aware counts remain side by side and review provenance remains explicit.
+
+\section{Frozen evidence package}
+The snapshot includes code, configurations, source records, annotations, test output, and verification inputs. Its manifest covers 353 files. API keys and environment credentials are excluded. A receipt records its hash and two isolated verification outputs.
+
+The package defines a fixed evidence version rather than relying on a mutable workspace. Final local changes are not represented as already published on GitHub. Appendix~\ref{app:reproduce} gives the archive identity and commands.
+\begin{lstlisting}[language=Python,caption={Abbreviated integrity check from the offline verifier.}]
+manifest = json.loads(Path("RESEARCH_MANIFEST.json").read_text())
+for name, expected in manifest["files"].items():
+    actual = hashlib.sha256(Path(name).read_bytes()).hexdigest()
+    if actual != expected:
+        raise ValueError(f"Evidence or code changed: {name}")
+\end{lstlisting}
+The verifier also reconstructs tables and compares them with stored outputs. Optional rescore mode runs the independent action audit. Ordinary network connections are blocked during verification so reconstruction cannot silently request new model responses.

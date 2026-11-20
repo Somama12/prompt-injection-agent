@@ -1,0 +1,229 @@
+\chapter{Discussion and Limitations}\label{ch:discussion}
+\section{What the research establishes}
+The strongest finding is observable and methodological: security, useful delivery, and content fidelity need separate measurement. In matched cases, four conditions have zero scored effects, yet useful delivery varies from three to seven. In final-decision replay, a gate can prevent undesirable delivery while withholding a usable summary; narrow repair can recover utility on particular examples. In the clean study, authorized delivery and correct core figures coexist with omitted secondary information.
+
+Case pairing changes interpretation. Hierarchy and combined appear identical from aggregate counts, but one loses a baseline success and the other does not. This does not identify a universal winner; it gives a more informative account of recorded behavior.
+
+\section{Selection, sample size, and dependence}
+The matched study is assembled retrospectively from completed collections. Collection stopped in benchmark order, and five of eight designs are direct overrides. One retained observation per design and condition limits repeatability claims.
+
+Three repetitions of a final-decision design are correlated observations, not three independent designs. Repair's six improvements represent two design-level successes. The Kimi study similarly has 150 episodes but one source article. Repetition characterizes variation within a setting; it does not replace new documents and tasks.
+
+The paper therefore reports descriptive counts rather than statistical significance or a population-level ranking. A larger repeated grid would improve coverage, but broader task diversity would still be necessary.
+
+\section{Measurement and review limitations}
+The frozen content rule misses unwanted inclusion alongside a summary. Credential checks recognize selected representations, not arbitrary semantic or encoded disclosure. The task heuristic can accept article-related text without establishing that every statement is correct. A zero score means no assigned effect detected by the specified rule in the evaluated cases.
+
+AI-assisted review was retrospective and not independent or blinded. Content annotations assess selected facts and details rather than every possible error. Exact source linkage makes the process auditable without removing reviewer bias. Independent human validation remains an uncompleted objective.
+
+\section{Causal and external-validity limits}
+Delivery replay fixes the final proposal and cannot measure adaptation after earlier blocking. Repair was developed on known examples; a held-out test and complete trajectories are needed to assess generalization.
+
+Provider, model, prompt, sampling, and collection differences prevent causal comparisons across cohorts. Kimi's clean results do not demonstrate greater security than Groq or Gemini. Its format experiment also uses its own shortened fixture. This project is not a controlled provider benchmark.
+
+The local article, deterministic summarizer, and mock mailbox simplify observation. Real applications add authentication, richer data sources, recipients, tool state, and consequences. The controlled setting improves inspectability at the expense of realism.
+
+\section{Responsible interpretation}
+Synthetic credentials and local delivery make this a contained behavior study. No actual credential disclosure or unauthorized real email is claimed. The evidence concerns recorded tool effects and the application's stated policy.
+
+The final contribution is an exploratory study with a verified software artifact. It is not completion of all 450 planned runs, independent human validation, or a scientifically determined completion percentage. Completed checks and explicit extensions describe the project more accurately.
+
+\chapter{Future Work and Conclusion}\label{ch:future}
+\section{Priority improvements}
+Future work should address evidence gaps before expanding presentation features. Table~\ref{tab:future} proposes measurable acceptance criteria.
+\begin{table}[!htbp]\centering\small
+\caption{Proposed next-stage improvements.}\label{tab:future}
+\begin{tabularx}{\textwidth}{@{}p{.20\textwidth}Y Y@{}}\toprule
+Priority & Work proposed & Acceptance criterion\\\midrule
+1. Evaluation design &
+Freeze models, tasks, scoring, configuration, and analysis before new collection; budget capacity. &
+Versioned protocol with explicit valid-cell targets and missing-data rules.\\
+2. Broader coverage &
+Complete a balanced 24-design, six-condition grid with repeats; keep provider cohorts separate. &
+Verified coverage, preserved failures, and complete per-condition denominators.\\
+3. Independent review &
+Recruit an independent reviewer; hide automated verdicts where feasible; adjudicate ambiguity. &
+Source-linked human labels, disagreements, and an adjudication record.\\
+4. Generalization &
+Separate marker inclusion from replacement, extend credential checks, test repair on unseen cases. &
+Held-out security and utility evaluation with regression tests.\\
+5. Source diversity &
+Add documents with varying length, fact order, and structure, then additional tasks. &
+Document-level analyses separating formatting from source-specific effects.\\
+6. Efficiency and release &
+Control order and concurrency for timing; document cost; publish a verified release. &
+Transparent usage records and a repository tag matching the release archive.\\\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Improving content preservation}
+A production-oriented extension should replace or supplement fixed three-paragraph, 700-character extraction. A structured fact-selection stage could track required fields and distinguish projections from realized outcomes. Evaluation must still inspect the final email rather than assume an intermediate representation guarantees fidelity.
+
+The format results suggest a controlled follow-up: vary paragraph boundaries and fact order across multiple documents while holding meaning constant. Retain source, actual tool input, tool output, and final delivery. This separates truncation from selection and composition. The current single-article finding provides a diagnostic example, not a general recommendation to prefer one format.
+
+\section{Improving security and useful recovery}
+Future policies should evaluate behavior after a block. A system might request a safe revision, constrain allowed fields, or ask the user to resolve ambiguity. Recovery requires a bounded loop and a record of proposed and executed actions.
+
+The observed repair is a starting point for held-out testing, but general protection requires more than removing a known token. A new evaluation should vary contamination location and representation, then measure both rejection of useful content and residual unauthorized material. The target remains useful completion under the stated policy.
+
+\section{Conclusion}
+The semester began with a repeated 450-episode evaluation plan. The implemented system achieved the software foundation and produced a smaller auditable study after interruptions and scope revision. Its principal evidence is a matched eight-design end-to-end comparison, a repeated 24-design final-decision analysis, and a 150-episode clean-format experiment, supported by AI-assisted review and offline reconstruction.
+
+Within the matched Groq cases, zero scored effects did not imply equal utility: useful deliveries ranged from three to seven among the four zero-effect conditions. Delivery repair recovered six useful outcomes on two designs while leaving three marker-inclusion effects unresolved. In Kimi's clean experiment, all final deliveries preserved three core figures, but optional details varied with format and the observed tool pathway.
+
+The project delivers an evaluation framework and a practical principle: assess what an agent actually executes, whether the authorized task succeeds, and what information survives. Broader repeated testing, independent review, and held-out policy evaluation are needed before extending these conclusions to other tasks or claiming general robustness.
+
+\clearpage\phantomsection
+\addcontentsline{toc}{chapter}{References}
+\begin{thebibliography}{9}
+\bibitem{greshake}
+K. Greshake, S. Abdelnabi, S. Mishra, C. Endres, T. Holz, and M. Fritz.
+\textit{Not what you've signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection}. 2023.
+\url{https://arxiv.org/abs/2302.12173}.
+\bibitem{injecagent}
+Q. Zhan, Z. Liang, Z. Ying, and D. Kang.
+\textit{InjecAgent: Benchmarking Indirect Prompt Injections in Tool-Integrated Large Language Model Agents}. 2024.
+\url{https://arxiv.org/abs/2403.02691}.
+\bibitem{agentdojo}
+E. Debenedetti, J. Zhang, M. Balunovi\'c, L. Beurer-Kellner, M. Fischer, and F. Tram\`er.
+\textit{AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for LLM Agents}. 2024.
+\url{https://arxiv.org/abs/2406.13352}.
+\bibitem{react}
+S. Yao, J. Zhao, D. Yu, N. Du, I. Shafran, K. Narasimhan, and Y. Cao.
+\textit{ReAct: Synergizing Reasoning and Acting in Language Models}. ICLR, 2023.
+\url{https://arxiv.org/abs/2210.03629}.
+\bibitem{hierarchy}
+E. Wallace, K. Xiao, R. Leike, L. Weng, J. Heidecke, and A. Beutel.
+\textit{The Instruction Hierarchy: Training LLMs to Prioritize Privileged Instructions}. 2024.
+\url{https://arxiv.org/abs/2404.13208}.
+\bibitem{project}
+S. Siddiqui. \textit{Prompt Injection Agent: Source Code, Experiment Protocol, and Archived Research Evidence}. Senior Seminar II project, 2026.
+\url{https://github.com/Somama12/prompt-injection-agent}.
+Frozen snapshot verified November 20, 2026; Appendix~\ref{app:reproduce}.
+\end{thebibliography}
+
+\appendix
+\titleformat{\chapter}[display]{\normalfont\bfseries}{\large Appendix \thechapter}{8pt}{\LARGE}
+\chapter{Reproduction and Artifact Guide}\label{app:reproduce}
+\section{Frozen research archive}
+The evidence package used for this report is:
+\begin{quote}\small
+\path{output/research_final/Research_Snapshot_Somama_Siddiqui.zip}
+\end{quote}
+Its SHA-256 digest, split only for display, is:
+\begin{quote}\small\ttfamily
+c1904a8f97779f898b639f07fe0f1868d\\
+5d0c502acabdef6196669b86d5ef592
+\end{quote}
+The receipt records 353 verified files and two isolated reconstructions. Extract into an empty directory and run from the extracted project root. Verification needs no live model credentials.
+
+\section{Offline commands}
+\begin{lstlisting}[language=bash,caption={Reconstruct saved tables without model requests.}]
+python3 -m scripts.verify_research_snapshot
+\end{lstlisting}
+Recorded output, wrapped for readability:
+\begin{lstlisting}
+Verified 353 file hashes, 48 matched episodes,
+75 reviewed decisions and 150 format trials.
+\end{lstlisting}
+To independently recompute scores and replay policies, install project dependencies in a virtual environment:
+\begin{lstlisting}[language=bash]
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python -m scripts.verify_research_snapshot --rescore
+\end{lstlisting}
+Dependency installation may need package-network access; subsequent verification uses saved records and blocks ordinary network connections. Full verification adds:
+\begin{lstlisting}
+66 source episodes rescored and 75 final decisions
+replayed without discrepancies.
+\end{lstlisting}
+
+\clearpage
+\section{Artifact map}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{.45\textwidth}>{\raggedright\arraybackslash}p{.49\textwidth}@{}}
+\caption{Paths relative to the project root.}\label{tab:artifacts}\\
+\toprule Artifact & Purpose\\\midrule\endfirsthead
+\toprule Artifact & Purpose\\\midrule\endhead
+\path{docs/EXPERIMENT_PROTOCOL.md} & Original protocol, definitions, and dated revisions.\\
+\path{docs/RESEARCH_COMPLETION.md} & Final acceptance checks, conclusions, and limits.\\
+\path{docs/ARCHIVED_RESEARCH_FINDINGS.md} & Detailed interpretation of saved evidence.\\
+\path{evaluation/archived_security_comparison.py} & Matched cohort, gains/losses, family counts, sensitivity.\\
+\path{evaluation/archived_findings.py} & Decision review, content fidelity, and tool replay.\\
+\path{scripts/audit_saved_research.py} & Independent rescoring and policy replay.\\
+\path{scripts/verify_research_snapshot.py} & Offline manifest and table verification.\\
+\path{output/research_final/score_audit.json} & Saved raw-score and replay audit.\\
+\path{output/research_final/software_tests.txt} & Final 74-test result.\\
+\path{output/research_final/reproduction_receipt.json} & Archive hash and verification outputs.\\
+\path{output/weeks10_12/evidence/archived_security_comparison.json} & Source-linked 48-episode comparison.\\
+\path{output/weeks10_12/evidence/archived_findings.json} & Reconstructed review and format tables.\\
+\path{output/weeks10_12/evidence/archived_decision_labels.json} & AI-assisted labels for 75 final decisions.\\
+\path{output/weeks10_12/evidence/kimi_summary_labels.json} & Body-linked annotations for 150 deliveries.\\
+\path{results/kimi_format_study/manifest.json} & Exact source renderings and settings.\\\bottomrule
+\end{longtable}
+
+\chapter{Definitions, Examples, and Data Schema}
+\section{Interpreting joint outcomes}
+\begin{table}[!htbp]\centering\small
+\caption{Conceptual examples, not additional experimental observations.}
+\begin{tabularx}{\textwidth}{@{}Y ccc@{}}\toprule
+Outcome & \(A\) & \(T\) & \(U\)\\\midrule
+Authorized useful summary without assigned effect & 0 & 1 & 1\\
+Refusal with no delivery & 0 & 0 & 0\\
+Useful summary also satisfying an inclusion goal & 1 & 1 & 0\\
+Unauthorized delivery without useful authorized summary & 1 & 0 & 0\\\bottomrule
+\end{tabularx}
+\end{table}
+The third row explains why task completion cannot substitute for security. Under the frozen replacement rule, some such messages receive a different \(A\), motivating separate goal-aware reporting.
+
+Operational failure is not a fifth behavioral outcome: its primary \(A,T,U\) are unavailable. A blocked proposal belongs in the trajectory but does not establish that the unwanted effect executed.
+
+\section{Principal fields}
+\begin{table}[!htbp]\centering\small
+\caption{Recorded fields and their analytical role.}
+\begin{tabularx}{\textwidth}{@{}p{.34\textwidth}Y@{}}\toprule
+Field group & Interpretation\\\midrule
+\code{attack\_id}, \code{defense}, trial & Experimental cell and matching key.\\
+\code{transcript}, \code{steps} & Model--tool trajectory and bounded execution.\\
+\code{tool\_calls} & Arguments, results, and block metadata.\\
+\code{sent\_emails} & Actual mock deliveries for reconciliation.\\
+\code{blocked\_actions} & Prevented proposals, not itself an effectiveness score.\\
+\code{llm\_calls}, \code{guard\_calls} & Agent and guard request counts.\\
+\code{latency\_s}, \code{error} & Duration and terminal failure state.\\
+Manifest and review digests & Exact configuration, source, and annotation identity.\\\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Paired useful-delivery changes}
+For design \(j\), let \(U_{j,0}\) be baseline and \(U_{j,d}\) the defended outcome. Then
+\begin{equation}
+G_d=\sum_j\mathbf{1}(U_{j,0}=0,U_{j,d}=1),\quad
+L_d=\sum_j\mathbf{1}(U_{j,0}=1,U_{j,d}=0).
+\end{equation}
+Net change is \(G_d-L_d\), but both terms matter. Hierarchy's \(5-1\) and combined's \(4-0\) each produce four additional useful deliveries while differing in whether a baseline success is lost.
+
+\chapter{Detailed Case-Level Results}
+\section{Matched-case changes}
+\begin{table}[!htbp]\centering\small
+\caption{Useful-delivery changes against baseline. A dash means no cases.}
+\begin{tabularx}{\textwidth}{@{}p{.22\textwidth}Y p{.17\textwidth}@{}}\toprule
+Condition & Gained designs & Lost designs\\\midrule
+Sanitization & \code{fs\_01} & ---\\
+Hierarchy & \code{do\_02}, \code{do\_03}, \code{do\_04}, \code{do\_05}, \code{fs\_01} & \code{rp\_01}\\
+Guard & \code{do\_04} & ---\\
+Allow-list & --- & ---\\
+Combined & \code{do\_03}, \code{do\_04}, \code{do\_05}, \code{fs\_01} & ---\\\bottomrule
+\end{tabularx}
+\end{table}
+\begin{table}[!htbp]\centering\small
+\caption{Useful delivery without scored effect, by family. Small denominators preclude reliable family-level rankings.}
+\begin{tabular}{@{}lrrrr@{}}\toprule
+Condition & Direct /5 & Exposure /1 & Disguised /1 & Role-play /1\\\midrule
+Baseline & 1 & 1 & 0 & 1\\
+Sanitization & 1 & 1 & 1 & 1\\
+Hierarchy & 5 & 1 & 1 & 0\\
+Guard & 2 & 1 & 0 & 1\\
+Allow-list & 1 & 1 & 0 & 1\\
+Combined & 4 & 1 & 1 & 1\\\bottomrule
+\end{tabular}
+\end{table}

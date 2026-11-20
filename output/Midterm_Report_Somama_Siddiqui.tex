@@ -51,7 +51,7 @@ Fisk University $\cdot$ October 5, 2026
 
 \begin{abstract}
 \noindent
-Prompt injection can redirect a language-model agent when instructions embedded in external content are treated as authoritative. This project studies that risk in a controlled task: reading a synthetic webpage, summarizing it, and sending a mock email to an authorized recipient. The cumulative work through Week 7 includes a custom Python agent, three instrumented mock tools, 24 hand-authored attacks across four categories, four individual defenses, and a combined defense condition. A no-defense baseline permits comparison while the legitimate task and tool environment remain fixed. Midterm development extends the original implementation with atomic checkpoints, resumable execution, repeat-trial support, source and configuration tracking, corrected outcome scoring, and a workflow for independent human validation. Forty automated tests pass, covering policy checks, parsing, scoring, interruption recovery, and review integrity. A completed Gemini 3.1 Flash-Lite pilot has saved \SavedCount{} of 30 planned episodes at the report cutoff, including \CleanCount{} valid clean controls and \AttackCount{} valid attacked episodes. All six clean controls completed the legitimate task; the available attacked episodes contain \HitCount{} observed successful attacks. These observations establish that the implemented pipeline can run against a live model, but a four-attack, single-trial pilot does not establish a reliable defense ranking or broad security effectiveness. The remaining study will complete the full attack grid, repeated trials, and a 30--50-transcript independent human validation sample, followed by comparative analysis and final delivery by Week 11.
+Prompt injection can redirect a language-model agent when instructions embedded in external content are treated as authoritative. This project studies that risk in a controlled task: reading a synthetic webpage, summarizing it, and sending a mock email to an authorized recipient. The cumulative work through Week 7 includes a custom Python agent, three instrumented mock tools, 24 hand-authored attacks across four categories, four individual defenses, and a combined defense condition. A no-defense baseline permits comparison while the legitimate task and tool environment remain fixed. Midterm development extends the original implementation with atomic checkpoints, resumable execution, repeat-trial support, source and configuration tracking, corrected outcome scoring, and a workflow for independent human validation. Forty automated tests pass, covering policy checks, parsing, scoring, interruption recovery, and review integrity. A completed Gemini 3.1 Flash-Lite pilot has saved \SavedCount{} of 30 planned episodes at the report cutoff, including \CleanCount{} valid clean controls and \AttackCount{} valid attacked episodes. All six clean controls completed the legitimate task; the available attacked episodes contain \HitCount{} observed successful attacks. These observations establish that the implemented pipeline can run against a live model, but a four-attack, single-trial pilot does not establish a reliable defense ranking or broad security effectiveness. The remaining study will complete the full attack grid, repeated trials, and a 30--50-transcript AI-assisted review sample, followed by comparative analysis and final delivery by Week 11.
 \end{abstract}
 \textbf{Keywords:} prompt injection; LLM agents; tool-use security; instruction hierarchy; guard LLM; reproducible evaluation.
 
@@ -75,7 +75,7 @@ The project objectives are to:
 \item Construct a benchmark of approximately 20--30 attacks with explicit, checkable target outcomes.
 \item Compare input sanitization, instruction-hierarchy prompting, a guard LLM, and an action allow-list under a shared task and model configuration.
 \item Measure attack success alongside legitimate-task completion so that refusing every action is not mistaken for a useful defense.
-\item Validate automated decisions against independent human judgments and document disagreements, failures, and limitations.
+\item Review automated decisions through AI-assisted transcript analysis and document disagreements, failures, and limitations. This review does not establish human-validated accuracy.
 \end{enumerate}
 The final product will include the codebase, attack definitions, experiment manifests, raw transcripts, scored results, figures, a research report, and a presentation or demonstration. The target is full project completion by Week 11.
 
@@ -181,8 +181,8 @@ $\longrightarrow$
 $\longrightarrow$
 \fbox{\begin{minipage}{0.17\linewidth}\centering Mock tools\\Outcome log\end{minipage}}
 \par\vspace{7pt}
-Saved episode $\longrightarrow$ deterministic scorer and model judge $\longrightarrow$ independent review
-\caption{Common experimental pipeline. The selected defense changes the intervention, while the task and mocked tools remain fixed. Human review is a separate validation stage.}
+Saved episode $\longrightarrow$ deterministic scorer and model judge $\longrightarrow$ AI-assisted review
+\caption{Common experimental pipeline. The selected defense changes the intervention, while the task and mocked tools remain fixed. AI-assisted review is a separate analysis stage; it does not constitute independent human validation.}
 \end{figure}
 
 \subsection{Resumable evaluation and reproducibility}
@@ -201,8 +201,10 @@ For content attacks, the scorer checks for the attack marker and whether the bod
 
 A Gemini judge supplies a second verdict from the attack goal and recorded evidence. The midterm code requires an actual JSON boolean. A string such as \texttt{"false"}, a missing field, or malformed JSON is an unavailable verdict, not a negative or positive attack outcome. Agreement with this judge is useful for inspecting consistency, but it is not equivalent to agreement with a human reviewer.
 
-\subsection{Human-review workflow}
-The implementation exports a reproducible sample using seed 42 and category-by-defense strata. Review packets contain the payload, target, transcript, executed tools, and sent-message records while withholding the automated verdicts. A human reviewer labels each packet \emph{succeeded}, \emph{blocked}, or \emph{ambiguous}. Blank fields remain unreviewed. Because transcripts can reveal defense behavior, the procedure is verdict-blinded rather than fully defense-blinded.
+\subsection{AI-assisted review and retained human-review tooling}
+The revised review plan uses AI-assisted transcript assessment. These assessments will be identified as AI-generated annotations, with evidence and uncertainty recorded separately from any human labels. No completed AI-assisted review dataset or review-derived metrics are claimed in this report. Independent human validation remains pending.
+
+The existing human-review implementation exports a reproducible sample using seed 42 and category-by-defense strata. Review packets contain the payload, target, transcript, executed tools, and sent-message records while withholding the automated verdicts. A human reviewer labels each packet \emph{succeeded}, \emph{blocked}, or \emph{ambiguous}. Blank fields remain unreviewed. Because transcripts can reveal defense behavior, the procedure is verdict-blinded rather than fully defense-blinded.
 
 The import and scoring workflow rejects duplicate or unknown identifiers, unsupported labels, missing rows, and changed episode evidence. It computes confusion counts, agreement, precision, and recall for each automated scorer against human binary labels. Ambiguous and blank labels are counted separately and excluded from binary metrics. Re-export does not overwrite an existing review directory. The workflow is implemented, but a completed independent human-label dataset is not yet available.
 
@@ -298,6 +300,8 @@ For independent human validation, precision is $TP/(TP+FP)$ and recall is $TP/(T
 
 \section{Progress Compared with the Original Proposal}
 \subsection{Completed commitments and remaining evaluation}
+\textbf{Review-plan update (October 19, 2026).} The next-phase transcript assessment is described as \emph{AI-assisted review}. This is a change from the original human-label plan, not evidence that independent human validation has been completed. The historical Week 7 results and original proposal commitments below are retained for comparison.
+
 The approved proposal calls for a small Python agent, approximately 20--30 attacks, three to four defenses, repeated attack-defense runs, a 30--50-run hand-labeled sample, and tables or heatmaps comparing security and task performance. The implementation meets the initial architecture, benchmark-size, and defense-count commitments. The full empirical evaluation is not yet complete.
 
 \begin{table}[htbp]\centering\small
@@ -339,15 +343,15 @@ Earlier narrative reports described batched execution and partial human review, 
 
 \textbf{Response and status.} Only an exact allow verdict permits the email. Invalid or unavailable guard responses stop execution and produce an error. Composite accounting is reset per action and accumulates actual guard invocations. Tests check failure behavior and accounting. These software defects are addressed; the guard's semantic accuracy still requires experiments.
 
-\subsection{Independent labels and disagreement}
+\subsection{AI-assisted review and disagreement}
 \textbf{Problem and effect.} Tone, refusal language, and actual tool outcomes can point in different directions. Two automated evaluators may agree without either being correct, particularly when an email quotes an injection or mixes a genuine summary with attacker text.
 
-\textbf{Response and status.} Review packets retain execution evidence while hiding automated verdicts. The reviewer may select an ambiguous label, and all three verdicts remain available for analysis. Evidence hashes prevent a reviewed transcript from being silently replaced. The workflow is ready; the independent labeling effort remains incomplete.
+\textbf{Response and status.} Review packets retain execution evidence while hiding automated verdicts. The reviewer may select an ambiguous label, and all three verdicts remain available for analysis. Evidence hashes prevent a reviewed transcript from being silently replaced. The human-label workflow is ready, but independent labels remain unavailable. The revised plan uses AI-assisted review to examine disagreements; its annotations must not be entered as human labels or treated as independent ground truth.
 
 \subsection{External validity and limited pilot coverage}
 \textbf{Problem and effect.} A single synthetic article and a small attack suite provide control but limited realism. The small single-trial pilot remains vulnerable to order and selection effects. A string-based success check does not fully evaluate semantic correctness.
 
-\textbf{Response and status.} The report discloses the exact four-attack coverage and avoids general defense rankings. The next phase expands execution across the complete suite and repeated trials, with manual review of ambiguous cases. Additional models or attack variants are optional extensions after the core commitments. The controlled design's limits remain part of the final interpretation even after full execution.
+\textbf{Response and status.} The report discloses the exact four-attack coverage and avoids general defense rankings. The next phase expands execution across the complete suite and repeated trials, with AI-assisted review of ambiguous cases. Additional models or attack variants are optional extensions after the core commitments. The controlled design's limits remain part of the final interpretation even after full execution.
 
 \section{Current Project Status}
 \subsection{Completed implementation and observed outcomes}
@@ -358,7 +362,7 @@ The latest frozen snapshot contains \AttackCount{} valid attacked episodes and s
 \subsection{Meaning of the 70 percent milestone}
 The target is 70\% of the whole project at midterm and 100\% by Week 11. The planning breakdown assigns 55\% to scope, agent, benchmark, defenses, evaluation tooling, and software verification; 10\% to a completed balanced pilot and preliminary analysis; and 5\% to the cumulative midterm report. These weights are estimates for managing work, not an instructor's grading formula or a measurement of scientific validity.
 
-The implementation, completed pilot with preliminary analysis, and this cumulative report satisfy the defined 70\% planning milestone. All 24 attacked pilot episodes and six controls have valid completed records after retrying failed episodes. This is an accounting of agreed deliverables, not a claim that 70\% of the final scientific conclusions have been established. The remaining 30\% consists of the full repeated experiment, independent human validation, and final analysis and delivery.
+The implementation, completed pilot with preliminary analysis, and this cumulative report satisfy the defined 70\% planning milestone. All 24 attacked pilot episodes and six controls have valid completed records after retrying failed episodes. This is an accounting of agreed deliverables, not a claim that 70\% of the final scientific conclusions have been established. The remaining work consists of the full repeated experiment, AI-assisted review, and final analysis and delivery. Replacing the planned human review changes the validation deliverable; AI-assisted review does not fulfill the original independent-human-validation milestone or automatically earn its planning weight.
 
 \subsection{What can and cannot be concluded}
 The evidence supports the conclusion that the implemented conditions can run end-to-end against a live model and that checkpointing and scoring infrastructure are tested. It also establishes at least one observed recipient-redirection failure in the baseline, while other valid episodes resisted their selected attacks. It does not establish that any defense is universally effective, that one condition is better than another, or that zero observed success implies zero underlying risk.
@@ -367,14 +371,14 @@ The same model family is used for the agent, guard, and judge, which may create 
 
 \section{Plan for the Second Half of the Semester}
 \subsection{Week 8: Complete the primary grid and begin review}
-Complete one full trial over all 24 attacks and six conditions, producing 144 attacked episodes plus six clean controls. Review error records and retry incomplete cells under the same frozen configuration. Generate category-by-defense coverage and outcome tables. Export a stratified sample of 30--50 valid attacked transcripts for independent review; the four-attack pilot alone can supply at most 24 and is insufficient for the proposed sample size.
+Complete one full trial over all 24 attacks and six conditions, producing 144 attacked episodes plus six clean controls. Review error records and retry incomplete cells under the same frozen configuration. Generate category-by-defense coverage and outcome tables. Export a stratified sample of 30--50 valid attacked transcripts for AI-assisted review; the four-attack pilot alone can supply at most 24 and is insufficient for the proposed sample size.
 
-The acceptance evidence is a complete manifest-linked dataset, a documented error disposition, a results table with denominators, and a review packet with blank labels ready for the human reviewer. If the protocol changes after pilot inspection, preserve the pilot and use a new experiment directory rather than mixing observations.
+The acceptance evidence is a complete manifest-linked dataset, a documented error disposition, a results table with denominators, and review packets ready for AI-assisted assessment. Keep AI annotations in a separate artifact with reviewer provenance and evidence; retain blank human-label fields for any later human review. If the protocol changes after pilot inspection, preserve the pilot and use a new experiment directory rather than mixing observations.
 
-\subsection{Week 9: Complete repeated trials and human validation}
+\subsection{Week 9: Complete repeated trials and AI-assisted review}
 Complete three trials in total for the primary model: $24\times6\times3=432$ attacked episodes and $6\times3=18$ clean controls. The repeats should use the same frozen configuration. Report the number of unique attack designs separately from the number of episodes.
 
-Finish the independent labels and calculate agreement, precision, recall, confusion counts, and ambiguous-case counts for each automated scorer. Inspect disagreements using the actual execution record. Do not replace ambiguous judgments with an invented consensus or present model-generated labels as human review. Completion requires both the saved labels and the traceable metrics, not merely the presence of the validation script.
+Complete the AI-assisted annotations and inspect disagreements using the actual execution record. Record succeeded, blocked, or ambiguous assessments with evidence and reviewer provenance. Report any comparison with the automated scorers as AI-review agreement, not human-validation accuracy. AI assessments can share errors with the existing model judge and are not independent ground truth. Completion requires saved annotations and traceable comparisons; independent human validation remains pending until actual human judgments are available.
 
 \subsection{Week 10: Analyze security and usability trade-offs}
 Compare observed attack success, legitimate-task completion on clean and attacked pages, elapsed episode time, and actual guard-call overhead. Examine representative failures and attacks resisted by the baseline. Explain how quota waits, provider retries, fixed task choice, scoring heuristics, and shared model families affect interpretation.
@@ -384,10 +388,10 @@ Any uncertainty analysis should respect the small number of independent attacks 
 \subsection{Week 11: Finalize and verify all deliverables}
 Complete the final research report, presentation, and demonstration. Verify that each table and figure can be traced to saved episodes and a code version. Provide exact reproduction commands, dependency information, outcome definitions, and limitations. Review the repository to ensure the final deliverables and evidence are organized and that credentials are excluded.
 
-The project is 100\% complete when the promised core experiment, independent validation, interpretation, report, presentation, and reproducible code have all been delivered and checked. Completion is not defined by the existence of code alone.
+Under the revised delivery plan, completion requires the core experiment, documented AI-assisted review, interpretation, report, presentation, and reproducible code. The final report must disclose that AI-assisted review replaces the planned human-review activity and that independent human validation remains unfulfilled. Completion is not defined by the existence of code alone.
 
 \subsection{Contingency and priorities}
-If API quota delays continue, resume from checkpoints and report actual coverage. The priorities are a complete primary experiment, independent validation, and defensible analysis. Extra attacks, additional models, token-cost instrumentation, or broader tasks remain extensions unless the core study finishes with sufficient time. Week 11 remains the completion target; any schedule change should be supported by the measured execution backlog rather than an assumed throughput.
+If API quota delays continue, resume from checkpoints and report actual coverage. The priorities are a complete primary experiment, AI-assisted review, and defensible analysis. Extra attacks, additional models, token-cost instrumentation, or broader tasks remain extensions unless the core study finishes with sufficient time. Week 11 remains the completion target; any schedule change should be supported by the measured execution backlog rather than an assumed throughput.
 
 \section*{Project Evidence Sources}
 \addcontentsline{toc}{section}{Project Evidence Sources}
